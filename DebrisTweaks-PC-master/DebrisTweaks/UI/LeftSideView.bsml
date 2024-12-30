@@ -1,0 +1,33 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<horizontal pref-height='8' pref-width='60' anchor-pos-y='35' horizontal-fit='PreferredSize' background='panel-top'>
+		<text text='Extra Velocity Tweaks' font-size='6' align='Midline' italics='true'/>
+	</horizontal>
+	<vertical pref-width='100' pref-height='100' anchor-pos-y='-15'>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change='true' value='moveSpeedMultiplier' id='moveSpeedMultiplierID' text='Move Speed' show-buttons='true' min='-2' max='2' increment='0.05' hover-hint='Change how fast the debris flys towards towards the player'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="ResetMoveSpeedMultiplier"/>
+		</horizontal>
+		<toggle-setting apply-on-change="true" value="adjustVerticalForceToggle" id="adjustVerticalForceToggleID" text="Adjust Vertical Force" hover-hint='This makes it where it adujests the cut direction speed based on the height of the cut.'/>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change='true' value='cutDirMultiplier' id='cutDirMultiplierID' text='Cut Direction Speed' show-buttons='true' min='-2.4' max='2.4' increment='0.05' hover-hint='Change how much the debris moves with the saber'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="ResetCutDirMultiplier"/>
+		</horizontal>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change='true' value='fromCenterSpeed' id='fromCenterSpeed' text='Cut From Center Speed' show-buttons='true' min='-10' max='10' increment='0.1' hover-hint='Change how fast the debris separates from the saber'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="ResetFromCenterSpeed"/>
+		</horizontal>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change='true' value='rotation' id='rotationID' text='Rotation Speed' show-buttons='true' min='-10' max='10' increment='0.1' hover-hint='How much the debris rotates'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="resetRotation"/>
+		</horizontal>
+		<toggle-setting apply-on-change="true" value="dynamicDebrisToggle" id="dynamicDebrisToggleID" text="Dynamic Debris" hover-hint='This makes it where when you slice harder the more the debris will separate this will also effect rotation and random rotation if toggled.'/>
+		<slider-setting apply-on-change="true" value="saberSens" id="saberSensID" text="Dynamic Debris Sensitivity" show-buttons="true" min="0" max="100" increment="1" hover-hint='Higher value less sensitivity recommended value: 40'/>
+		<slider-setting apply-on-change="true" value="randomCutFromCenter" id="randomCutFromCenterID" text="Random Cut From Center Speed" show-buttons="true" min="0" max="10" increment="0.1" hover-hint='When you slice the note the debris randomly splits from center Default Value: 0.1'/>
+		<toggle-setting apply-on-change="true" value="randomRotationToggle" id="randomRotationToggleID" text="Random Rotation Toggle" hover-hint='Default Value: False'/>
+		<slider-setting apply-on-change="true" value="randomRotation" id="randomRotationID" text="Random Rotation Speed" show-buttons="true" min="0" max="10" increment="1" hover-hint='When you slice the note it randomly spin the debris'/>
+
+		<!-- <clickable-text text='Old Debris preset from early versions of BS' font-size="4" align="Center" on-click="SetOldDebris"/>  -->
+		<text text=" " font-size="10"/>
+
+	</vertical>
+</bg>

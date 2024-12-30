@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ReferencePath>D:\Steam Pirated Games\Beat.Saber.v1.39.0\Beat Saber_Data\Managed;D:\Steam Pirated Games\Beat.Saber.v1.39.0\Libs;D:\Steam Pirated Games\Beat.Saber.v1.39.0\Plugins</ReferencePath>
+    <BeatSaberDir>D:\Steam Pirated Games\Beat.Saber.v1.39.0</BeatSaberDir>
+  </PropertyGroup>
+</Project>

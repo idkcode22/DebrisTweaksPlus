@@ -1,0 +1,30 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<horizontal pref-height='8' pref-width='60' anchor-pos-y='35' horizontal-fit='PreferredSize' background='panel-top'>
+		<text text='Cosmetic' font-size='6' align='Midline' italics='true'/>
+	</horizontal>
+	<vertical pref-width='80' pref-height='40' anchor-pos-y='-15'>
+		<toggle-setting apply-on-change='true' value='CustomColourToggle' id='CustomColourToggleID' text='Enable Custom Debris Colours' hover-hint='Default Value: False'/>
+		<color-setting apply-on-change='true' value='LeftColour' id='LeftColourID' text='Left Debris Colour' hover-hint='Default Value: 255, 0, 0'/>
+		<color-setting apply-on-change='true' value='RightColour' id='RightColourID' text='Right Debris Colour'  hover-hint='Default Value: 0, 0, 255'/>
+		<slider-setting apply-on-change="true" value="DebrisScale" id="DebrisScaleID" text="Scale" show-buttons="true"  min="0.1" max="2" increment="0.05"  hover-hint='Default Value: 1'/>
+
+		<text text=" " font-size="4"/>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change="true" value="minLifetime" id="minLifetimeID" text="Min Lifespan Time" show-buttons="true" min="0" max="15" increment="0.1" hover-hint='Min Debris Lifetime'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="resetMinLifeTime"/>
+		</horizontal>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change="true" value="maxLifetime" id="maxLifetimeID" text="Max Lifespan Time" show-buttons="true" min="0.1" max="15" increment="0.1" hover-hint='Max Debris Lifetime'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="resetMaxLifeTime"/>
+		</horizontal>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="-1" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
+			<clickable-text text='Reset' font-size="4" align="Center" on-click="resetLifeTimeOffset"/>
+		</horizontal>
+
+
+
+
+		<text text=" " font-size="16"/>
+	</vertical>
+</bg>
