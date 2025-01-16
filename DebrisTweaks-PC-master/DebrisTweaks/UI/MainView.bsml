@@ -1,4 +1,4 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<horizontal pref-height='8' pref-width='60' anchor-pos-y='35' horizontal-fit='PreferredSize' background='panel-top'>
 		<text text='Physics' font-size='6' align='Midline' italics='true'/>
 	</horizontal>
@@ -10,6 +10,13 @@
 
 		<toggle-setting apply-on-change='true' value='GravityToggle' id='GravityToggleID' text='Enable Gravity' hover-hint='Default Value: True'/>
 		<toggle-setting apply-on-change='true' value='RotationToggle' id='RotationToggleID' text='Prevent Rotations' hover-hint='Default Value: False'/>
+		
+		<increment-setting value='profile_value' apply-on-change='true' bind-value='true' text='Profile' integer-only='true' min='1' max='5' hover-hint='Select what profile you want to save to or load to '/>
+		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+			<button align='Center' on-click='saveclicked' text='Save' hover-hint='Save profile'></button>
+			<button align='Center' on-click='loadclicked' text='Load' hover-hint='Load profile for this screen'></button>
+
+		</horizontal>
 
 		<text text=' ' font-size='25'/>
 	</vertical>
