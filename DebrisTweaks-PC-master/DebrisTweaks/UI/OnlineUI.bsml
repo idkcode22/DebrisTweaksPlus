@@ -6,7 +6,7 @@
 		<toggle-setting apply-on-change='true' value='ModToggle' id='ModToggleID' text='Enable Debris Tweaks' hover-hint='Default Value: True'/>
 		<slider-setting apply-on-change="true" value="minLifetime" id="minLifetimeID" text="Min Lifespan Time" show-buttons="true" min="0" max="15" increment="0.1" hover-hint='Min Debris Lifetime'/>
 		<slider-setting apply-on-change="true" value="maxLifetime" id="maxLifetimeID" text="Max Lifespan Time" show-buttons="true" min="0.1" max="15" increment="0.1" hover-hint='Max Debris Lifetime'/>
-		<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="0" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
+		<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="-1" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
 		<text text=' ' font-size='3'/>
 
 		<increment-setting value='profile_value' apply-on-change='true' bind-value='true' text='Profile' integer-only='true' min='1' max='5' hover-hint='Select what profile you want to save to or load to '/>
