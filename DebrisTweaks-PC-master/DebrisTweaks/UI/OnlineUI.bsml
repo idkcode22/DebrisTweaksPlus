@@ -1,19 +1,19 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<horizontal pref-height='8' pref-width='60' anchor-pos-y='30' horizontal-fit='PreferredSize' background='panel-top'>
 		<text text='Tweaks' font-size='6' align='Midline' italics='true'/>
 	</horizontal>
 	<vertical pref-width='100' pref-height='100' anchor-pos-y='-5'>
-		<slider-setting apply-on-change='true' value='moveSpeedMultiplier' id='moveSpeedMultiplierID' text='Move Speed' show-buttons='true' min='-2' max='2' increment='0.05' hover-hint='Change how fast the debris flys towards towards the player'/>
-		<slider-setting apply-on-change='true' value='cutDirMultiplier' id='cutDirMultiplierID' text='Cut Direction Speed' show-buttons='true' min='-2.4' max='2.4' increment='0.05' hover-hint='Change how much the debris moves with the saber'/>
-		<slider-setting apply-on-change="true" value="saberSens" id="saberSensID" text="Dynamic Debris Sensitivity" show-buttons="true" min="0" max="100" increment="1" hover-hint='Higher value less sensitivity recommended value: 40'/>
-		<toggle-setting apply-on-change='true' value='GravityToggle' id='GravityToggleID' text='Enable Gravity' hover-hint='Default Value: True'/>
+		<toggle-setting apply-on-change='true' value='ModToggle' id='ModToggleID' text='Enable Debris Tweaks' hover-hint='Default Value: True'/>
+		<slider-setting apply-on-change="true" value="minLifetime" id="minLifetimeID" text="Min Lifespan Time" show-buttons="true" min="0" max="15" increment="0.1" hover-hint='Min Debris Lifetime'/>
+		<slider-setting apply-on-change="true" value="maxLifetime" id="maxLifetimeID" text="Max Lifespan Time" show-buttons="true" min="0.1" max="15" increment="0.1" hover-hint='Max Debris Lifetime'/>
+		<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="0" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
 		<text text=' ' font-size='3'/>
 
-			<slider-setting apply-on-change="true" value="minLifetime" id="minLifetimeID" text="Min Lifespan Time" show-buttons="true" min="0" max="15" increment="0.1" hover-hint='Min Debris Lifetime'/>
-			<slider-setting apply-on-change="true" value="maxLifetime" id="maxLifetimeID" text="Max Lifespan Time" show-buttons="true" min="0.1" max="15" increment="0.1" hover-hint='Max Debris Lifetime'/>
-			<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="0" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
-			<clickable-text text='Refresh' font-size="4" align="Center" on-click="RefreshOnline" hover-hint='Use this to get values from main menu'/>
-			<clickable-text  text='Send To Main' id='SendToMain' font-size="4" align="Center" on-click="RefreshMain" hover-hint='You only have to do this once'/>
+		<increment-setting value='profile_value' apply-on-change='true' bind-value='true' text='Profile' integer-only='true' min='1' max='5' hover-hint='Select what profile you want to save to or load to '/>
+
+			<clickable-text text='Load' font-size="4" align="Center" on-click="loadclicked" hover-hint='Load selected profile'/>
+			<clickable-text text='Refresh' font-size="4" align="Center" on-click="RefreshOnline" hover-hint='Use this to get values from main menu and to get values from profile'/>
+			<clickable-text  text='Send To Main' id='SendToMain' font-size="4" align="Center" on-click="RefreshMain" hover-hint='Send values to main you only have to do this once'/>
 
 		<text text=' ' font-size='10'/>
 
