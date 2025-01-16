@@ -1,4 +1,4 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<horizontal pref-height='8' pref-width='60' anchor-pos-y='35' horizontal-fit='PreferredSize' background='panel-top'>
 		<text text='Cosmetic' font-size='6' align='Midline' italics='true'/>
 	</horizontal>
@@ -21,6 +21,7 @@
 			<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" show-buttons="true" min="-1" max="15" increment="0.05" hover-hint='Debris Lifetime Offset'/>
 			<clickable-text text='Reset' font-size="4" align="Center" on-click="resetLifeTimeOffset"/>
 		</horizontal>
+		<button align='Center' on-click='loadclicked' text='Load' hover-hint='Load profile on this screen'></button>
 
 
 
