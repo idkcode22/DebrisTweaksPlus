@@ -176,11 +176,6 @@ namespace DebrisTweaks.UI
                 config.GravityToggle = config.GravityToggle5;
                 config.RotationToggle = config.RotationToggle5;
             }
-            //var fent = new DTSideView();
-            //var fent2 = new DTLeftSideView();
-            //DTFlow.LoadProfile(profile_value);
-            //fent.LoadProfile(profile_value);
-            //fent2.LoadProfile(profile_value);
             RefreshUI("DebrisTweaks.UI.MainView.bsml");
             NotifyPropertyChanged(nameof(ModToggle));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(forceMultiplier));  // Notify the UI of the value change
@@ -239,7 +234,6 @@ namespace DebrisTweaks.UI
                 config.GravityToggle5 = config.GravityToggle;
                 config.RotationToggle5 = config.RotationToggle;
             }
-           // RefreshUI("DebrisTweaks.UI.MainView.bsml");
             var fent = new DTSideView();
             var fent2 = new DTLeftSideView();
             fent.SaveProfile(profile_value);
@@ -354,7 +348,7 @@ namespace DebrisTweaks.UI
         {
             var fent = new DTMainView();
             float Val = fent.profile_value;
-            Plugin.Log.Info("Load profile from sideView success");
+            //Plugin.Log.Info("Load profile from sideView success"); //Debug
 
             if (Val == 1)
             {
@@ -486,7 +480,6 @@ namespace DebrisTweaks.UI
             NotifyPropertyChanged(nameof(maxLifetime));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(lifeTimeOffset));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(DebrisScale));  // Notify the UI of the value change
-            //RefreshUI("DebrisTweaks.UI.SideView.bsml");
 
         }
 
@@ -794,7 +787,6 @@ namespace DebrisTweaks.UI
             NotifyPropertyChanged(nameof(randomRotation));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(dynamicDebrisToggle));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(saberSens));  // Notify the UI of the value change
-            //RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
 
