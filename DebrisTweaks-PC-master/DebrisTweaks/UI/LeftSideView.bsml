@@ -1,4 +1,4 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<horizontal pref-height='8' pref-width='60' anchor-pos-y='35' horizontal-fit='PreferredSize' background='panel-top'>
 		<text text='Extra Velocity Tweaks' font-size='6' align='Midline' italics='true'/>
 	</horizontal>
@@ -25,8 +25,8 @@
 		<slider-setting apply-on-change="true" value="randomCutFromCenter" id="randomCutFromCenterID" text="Random Cut From Center Speed" show-buttons="true" min="0" max="10" increment="0.1" hover-hint='When you slice the note the debris randomly splits from center Default Value: 0.1'/>
 		<toggle-setting apply-on-change="true" value="randomRotationToggle" id="randomRotationToggleID" text="Random Rotation Toggle" hover-hint='Default Value: False'/>
 		<slider-setting apply-on-change="true" value="randomRotation" id="randomRotationID" text="Random Rotation Speed" show-buttons="true" min="0" max="10" increment="1" hover-hint='When you slice the note it randomly spin the debris'/>
+		<button align='Center' on-click='loadclicked' text='Load' hover-hint='Load profile for this screen'></button>
 
-		<!-- <clickable-text text='Old Debris preset from early versions of BS' font-size="4" align="Center" on-click="SetOldDebris"/>  -->
 		<text text=" " font-size="10"/>
 
 	</vertical>
