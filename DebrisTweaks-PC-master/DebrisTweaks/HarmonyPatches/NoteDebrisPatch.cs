@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+using HarmonyLib;
 using UnityEngine;
 using System.Reflection;
 using System.Windows.Forms;
@@ -118,11 +118,14 @@ public static class NoteDebrisSpawnerPatch
             torque = debrisRotation * (Random.insideUnitSphere * randomRotation) + (Vector3.Cross(cutNormal, vector) * rotation);
         }
         // Set debris position and rotation
+        Quaternion rotations = __instance.transform.rotation;
         force *= config.forceMultiplier;
         force2 *= config.forceMultiplier;
         Vector3 position = __instance.transform.position;
-        debris.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, debrisRotation, cutPoint, -cutNormal, force, -torque, lifeTime);
-        debris2.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, debrisRotation, cutPoint, cutNormal, force2, torque, lifeTime);
+        Vector3 cutoutOffset = Random.insideUnitSphere;
+        Vector3 cutoutOffset2 = Random.insideUnitSphere;
+        debris.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, rotations, cutPoint, -cutNormal, force, -torque, lifeTime, cutoutOffset, false);
+        debris2.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, rotations, cutPoint, cutNormal, force2, torque, lifeTime, cutoutOffset2, false);
 
         return false; // Skip the original method
     }
