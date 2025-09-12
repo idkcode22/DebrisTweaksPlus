@@ -88,6 +88,7 @@ namespace DebrisTweaks.OnlineUI
             {
 
                 config.ModToggle = config.ModToggle1;
+                config.fixDebris = config.fixDebris1;
                 config.forceMultiplier = config.forceMultiplier1;
                 config.DragMultiplier = config.DragMultiplier1;
                 config.GravityToggle = config.GravityToggle1;
@@ -114,6 +115,7 @@ namespace DebrisTweaks.OnlineUI
             if (profile_value == 2f)
             {
                 config.ModToggle = config.ModToggle2;
+                config.fixDebris = config.fixDebris2;
                 config.forceMultiplier = config.forceMultiplier2;
                 config.DragMultiplier = config.DragMultiplier2;
                 config.GravityToggle = config.GravityToggle2;
@@ -140,6 +142,7 @@ namespace DebrisTweaks.OnlineUI
             if (profile_value == 3f)
             {
                 config.ModToggle = config.ModToggle3;
+                config.fixDebris = config.fixDebris3;
                 config.forceMultiplier = config.forceMultiplier3;
                 config.DragMultiplier = config.DragMultiplier3;
                 config.GravityToggle = config.GravityToggle3;
@@ -166,6 +169,7 @@ namespace DebrisTweaks.OnlineUI
             if (profile_value == 4f)
             {
                 config.ModToggle = config.ModToggle4;
+                config.fixDebris = config.fixDebris4;
                 config.forceMultiplier = config.forceMultiplier4;
                 config.DragMultiplier = config.DragMultiplier4;
                 config.GravityToggle = config.GravityToggle4;
@@ -192,6 +196,7 @@ namespace DebrisTweaks.OnlineUI
             if (profile_value == 5f)
             {
                 config.ModToggle = config.ModToggle5;
+                config.fixDebris = config.fixDebris5;
                 config.forceMultiplier = config.forceMultiplier5;
                 config.DragMultiplier = config.DragMultiplier5;
                 config.GravityToggle = config.GravityToggle5;
