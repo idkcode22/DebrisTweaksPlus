@@ -1,5 +1,5 @@
 # DebrisTweaksPlus
-I used this GitHub to make this mod which is where most of the code came from: https://github.com/NuggoDEV/DebrisTweaks-PC#features
+I used this GitHub to make this mod, which is where most of the code came from: https://github.com/NuggoDEV/DebrisTweaks-PC#features
 # Features
 1. Lifespan:
    Min, Max, Offset
@@ -14,10 +14,11 @@ I used this GitHub to make this mod which is where most of the code came from: h
 9. Random Rotations Toggle
 10. Edit Debris Colors
 11. You can save settings in different profiles and load them.
+12. Fix debris physics logic toggle
 # Installation
-1. Get the required mods which are BSIPA, BeatSaberMarkupLanguage (BSML), and SiraUtil, and get these mods for 1.39 or 1.39.1
-2. Download and extract the "Plugins.zip" from releases
+1. Get the required mods, which are BSIPA, BeatSaberMarkupLanguage (BSML), and SiraUtil
+2. Download and extract the "Plugins.zip" from the releases
 3. Then select the "Plugins" folder
-4. Move the folder where you have beat saber installed
+4. Move the folder where you have Beat Saber installed
    
 
