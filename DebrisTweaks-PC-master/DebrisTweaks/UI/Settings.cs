@@ -91,6 +91,13 @@ namespace DebrisTweaks.UI
             set => config.ModToggle = value;
         }
 
+        [UIValue("FixDebris")]
+        private bool FixDebris
+        {
+            get => config.fixDebris;
+            set => config.fixDebris = value;
+        }
+
         [UIValue("VelocityMult")]
         private float forceMultiplier
         {
@@ -135,6 +142,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 1f)
             {
                 config.ModToggle = config.ModToggle1;
+                config.fixDebris = config.fixDebris1;
                 config.forceMultiplier = config.forceMultiplier1;
                 config.DragMultiplier = config.DragMultiplier1;
                 config.GravityToggle = config.GravityToggle1;
@@ -144,6 +152,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 2f)
             {
                 config.ModToggle = config.ModToggle2;
+                config.fixDebris = config.fixDebris2;
                 config.forceMultiplier = config.forceMultiplier2;
                 config.DragMultiplier = config.DragMultiplier2;
                 config.GravityToggle = config.GravityToggle2;
@@ -153,6 +162,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 3f)
             {
                 config.ModToggle = config.ModToggle3;
+                config.fixDebris = config.fixDebris3;
                 config.forceMultiplier = config.forceMultiplier3;
                 config.DragMultiplier = config.DragMultiplier3;
                 config.GravityToggle = config.GravityToggle3;
@@ -162,6 +172,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 4f)
             {
                 config.ModToggle = config.ModToggle4;
+                config.fixDebris = config.fixDebris4;
                 config.forceMultiplier = config.forceMultiplier4;
                 config.DragMultiplier = config.DragMultiplier4;
                 config.GravityToggle = config.GravityToggle4;
@@ -171,11 +182,17 @@ namespace DebrisTweaks.UI
             if (profile_value == 5f)
             {
                 config.ModToggle = config.ModToggle5;
+                config.fixDebris = config.fixDebris5;
                 config.forceMultiplier = config.forceMultiplier5;
                 config.DragMultiplier = config.DragMultiplier5;
                 config.GravityToggle = config.GravityToggle5;
                 config.RotationToggle = config.RotationToggle5;
             }
+            //var fent = new DTSideView();
+            //var fent2 = new DTLeftSideView();
+            //DTFlow.LoadProfile(profile_value);
+            //fent.LoadProfile(profile_value);
+            //fent2.LoadProfile(profile_value);
             RefreshUI("DebrisTweaks.UI.MainView.bsml");
             NotifyPropertyChanged(nameof(ModToggle));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(forceMultiplier));  // Notify the UI of the value change
@@ -193,6 +210,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 1f)
             {
                 config.ModToggle1 = config.ModToggle;
+                config.fixDebris1 = config.fixDebris;
                 config.forceMultiplier1 = config.forceMultiplier;
                 config.DragMultiplier1 = config.DragMultiplier;
                 config.GravityToggle1 = config.GravityToggle;
@@ -202,6 +220,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 2f)
             {
                 config.ModToggle2 = config.ModToggle;
+                config.fixDebris2 = config.fixDebris;
                 config.forceMultiplier2 = config.forceMultiplier;
                 config.DragMultiplier2 = config.DragMultiplier;
                 config.GravityToggle2 = config.GravityToggle;
@@ -211,6 +230,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 3f)
             {
                 config.ModToggle3 = config.ModToggle;
+                config.fixDebris3 = config.fixDebris;
                 config.forceMultiplier3 = config.forceMultiplier;
                 config.DragMultiplier3 = config.DragMultiplier;
                 config.GravityToggle3 = config.GravityToggle;
@@ -220,6 +240,7 @@ namespace DebrisTweaks.UI
             if (profile_value == 4f)
             {
                 config.ModToggle4 = config.ModToggle;
+                config.fixDebris4 = config.fixDebris;
                 config.forceMultiplier4 = config.forceMultiplier;
                 config.DragMultiplier4 = config.DragMultiplier;
                 config.GravityToggle4 = config.GravityToggle;
@@ -229,11 +250,13 @@ namespace DebrisTweaks.UI
             if (profile_value == 5f)
             {
                 config.ModToggle5 = config.ModToggle;
+                config.fixDebris5 = config.fixDebris;
                 config.forceMultiplier5 = config.forceMultiplier;
                 config.DragMultiplier5 = config.DragMultiplier;
                 config.GravityToggle5 = config.GravityToggle;
                 config.RotationToggle5 = config.RotationToggle;
             }
+           // RefreshUI("DebrisTweaks.UI.MainView.bsml");
             var fent = new DTSideView();
             var fent2 = new DTLeftSideView();
             fent.SaveProfile(profile_value);
@@ -348,7 +371,7 @@ namespace DebrisTweaks.UI
         {
             var fent = new DTMainView();
             float Val = fent.profile_value;
-            //Plugin.Log.Info("Load profile from sideView success"); //Debug
+            Plugin.Log.Info("Load profile from sideView success");
 
             if (Val == 1)
             {
@@ -480,6 +503,7 @@ namespace DebrisTweaks.UI
             NotifyPropertyChanged(nameof(maxLifetime));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(lifeTimeOffset));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(DebrisScale));  // Notify the UI of the value change
+            //RefreshUI("DebrisTweaks.UI.SideView.bsml");
 
         }
 
@@ -787,6 +811,7 @@ namespace DebrisTweaks.UI
             NotifyPropertyChanged(nameof(randomRotation));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(dynamicDebrisToggle));  // Notify the UI of the value change
             NotifyPropertyChanged(nameof(saberSens));  // Notify the UI of the value change
+            //RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
 
