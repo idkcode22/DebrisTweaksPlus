@@ -4,7 +4,9 @@
 	</horizontal>
 	<vertical pref-width='80' pref-height='50' anchor-pos-y='-15'>
 		<toggle-setting apply-on-change='true' value='ModToggle' id='ModToggleID' text='Enable Debris Tweaks' hover-hint='Default Value: True'/>
-		
+
+		<toggle-setting apply-on-change='true' value='FixDebris' id='FixDebrisID' text='Fix Debris Physics' hover-hint='Reverts previous debris physics logic before 1.38 by using force instead of linear velocity.'/>
+
 		<slider-setting apply-on-change='true' value='VelocityMult' id='VelocityMultID' text='Velocity Multiplier' show-buttons='true' min='-10' max='10' increment='0.1' hover-hint='Default Value: 1'/>
 		<slider-setting apply-on-change='true' value='DragMult' id='DragMultID' text='Drag' show-buttons='true' min='0' max='15' increment='0.1' hover-hint='Default Value: 1'/>
 
