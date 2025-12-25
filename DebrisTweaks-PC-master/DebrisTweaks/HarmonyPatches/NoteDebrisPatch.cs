@@ -38,7 +38,7 @@ public static class NoteDebrisSpawnerPatch
         float kLifeTimeOffset = config.lifeTimeOffset;
 
         float rotation = config.rotation;
-        float cutDirMultiplier = config.cutDirMultiplier*0.1f; //0.025
+        float cutDirMultiplier = config.cutDirMultiplier * 0.1f; //0.025
         float fromCenterSpeed = config.fromCenterSpeed;
         float moveSpeedMultiplier = config.moveSpeedMultiplier;
 
@@ -96,7 +96,7 @@ public static class NoteDebrisSpawnerPatch
             randomRotation = 0f;
         }
         //determind what the minium saberspeed is
-        float dynamicSaberSpeed = saberSpeed/config.saberSens;
+        float dynamicSaberSpeed = saberSpeed / config.saberSens;
         if (dynamicSaberSpeed < magnitude * 0.03f)
         {
             dynamicSaberSpeed = magnitude * 0.03f;
@@ -131,27 +131,37 @@ public static class NoteDebrisSpawnerPatch
     internal class NoteDebris_Init
     {
         [HarmonyPostfix]
-        public static void Postfix(NoteDebris __instance, ref ColorType colorType, ref float ____lifeTime, ref MaterialPropertyBlockController ____materialPropertyBlockController, ref int ____colorID)
+        public static void Postfix(NoteDebris __instance, ColorType colorType, float ____lifeTime, MaterialPropertyBlockController ____materialPropertyBlockController, int ____colorID)
         {
             Config config = Config.Instance;
-            if (!config.ModToggle || !config.RotationToggle && config.DragMultiplier == 1 && config.GravityToggle && !config.CustomColourToggle) return;
+            if (!config.ModToggle || (!config.RotationToggle && config.Drag == 0 && !config.RandomDrag && config.GravityToggle && !config.CustomColourToggle)) return;
 
             Rigidbody rb = __instance.GetComponent<Rigidbody>();
-
-            rb.freezeRotation = config.RotationToggle;
-            rb.drag = config.DragMultiplier;
-            rb.useGravity = config.GravityToggle;
-
-            Renderer renderer = __instance.gameObject.GetComponentInChildren<Renderer>();
-
-            if (renderer && config.CustomColourToggle)
+            if (rb != null)
             {
-                if (colorType == ColorType.ColorA)
-                    ____materialPropertyBlockController.materialPropertyBlock.SetColor(____colorID, config.LeftColour);
-                else if (colorType == ColorType.ColorB)
-                    ____materialPropertyBlockController.materialPropertyBlock.SetColor(____colorID, config.RightColour);
+                float randomdrag = Random.Range(config.DragMin, config.DragMax);
+                float drag = config.RandomDrag ? randomdrag : config.Drag;
+                rb.freezeRotation = config.RotationToggle;
+                rb.drag = drag;
+                rb.useGravity = config.GravityToggle;
+            }
 
-                ____materialPropertyBlockController.ApplyChanges();
+            // Only touch material if the injected field was found and custom colors are enabled.
+            if (____materialPropertyBlockController != null && config.CustomColourToggle)
+            {
+                try
+                {
+                    if (colorType == ColorType.ColorA)
+                        ____materialPropertyBlockController.materialPropertyBlock.SetColor(____colorID, config.LeftColour);
+                    else if (colorType == ColorType.ColorB)
+                        ____materialPropertyBlockController.materialPropertyBlock.SetColor(____colorID, config.RightColour);
+
+                    ____materialPropertyBlockController.ApplyChanges();
+                }
+                catch
+                {
+                    // Defensive: don't let any material errors break debris (multiplayer remote objects differ).
+                }
             }
         }
     }

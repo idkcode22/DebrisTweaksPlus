@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Attributes;
@@ -106,13 +106,30 @@ namespace DebrisTweaks.UI
         }
 
 
-        [UIValue("DragMult")]
-        private float DragMultiplier
+        [UIValue("Drag")]
+        private float Drag
         {
-            get => config.DragMultiplier;
-            set => config.DragMultiplier = value;
+            get => config.Drag;
+            set => config.Drag = value;
         }
-
+        [UIValue("RandomDrag")]
+        private bool RandomDrag
+        {
+            get => config.RandomDrag;
+            set => config.RandomDrag = value;
+        }
+        [UIValue("DragMin")]
+        private float DragMin
+        {
+            get => config.DragMin;
+            set => config.DragMin = value;
+        }
+        [UIValue("DragMax")]
+        private float DragMax
+        {
+            get => config.DragMax;
+            set => config.DragMax = value;
+        }
         [UIValue("GravityToggle")]
         private bool GravityToggle
         {
@@ -135,137 +152,19 @@ namespace DebrisTweaks.UI
         }
         //profile stuff
         [UIAction("loadclicked")]
-        //wouldve made it where it loads on all screen with one click but trying to figure out was making me want to take whippets
         private void LoadProfile()
         {
+            int idx = (int)profile_value;
+            config.LoadProfileMain(idx);
 
-            if (profile_value == 1f)
-            {
-                config.ModToggle = config.ModToggle1;
-                config.fixDebris = config.fixDebris1;
-                config.forceMultiplier = config.forceMultiplier1;
-                config.DragMultiplier = config.DragMultiplier1;
-                config.GravityToggle = config.GravityToggle1;
-                config.RotationToggle = config.RotationToggle1;
-            }
-
-            if (profile_value == 2f)
-            {
-                config.ModToggle = config.ModToggle2;
-                config.fixDebris = config.fixDebris2;
-                config.forceMultiplier = config.forceMultiplier2;
-                config.DragMultiplier = config.DragMultiplier2;
-                config.GravityToggle = config.GravityToggle2;
-                config.RotationToggle = config.RotationToggle2;
-            }
-
-            if (profile_value == 3f)
-            {
-                config.ModToggle = config.ModToggle3;
-                config.fixDebris = config.fixDebris3;
-                config.forceMultiplier = config.forceMultiplier3;
-                config.DragMultiplier = config.DragMultiplier3;
-                config.GravityToggle = config.GravityToggle3;
-                config.RotationToggle = config.RotationToggle3;
-            }
-
-            if (profile_value == 4f)
-            {
-                config.ModToggle = config.ModToggle4;
-                config.fixDebris = config.fixDebris4;
-                config.forceMultiplier = config.forceMultiplier4;
-                config.DragMultiplier = config.DragMultiplier4;
-                config.GravityToggle = config.GravityToggle4;
-                config.RotationToggle = config.RotationToggle4;
-            }
-
-            if (profile_value == 5f)
-            {
-                config.ModToggle = config.ModToggle5;
-                config.fixDebris = config.fixDebris5;
-                config.forceMultiplier = config.forceMultiplier5;
-                config.DragMultiplier = config.DragMultiplier5;
-                config.GravityToggle = config.GravityToggle5;
-                config.RotationToggle = config.RotationToggle5;
-            }
-            //var fent = new DTSideView();
-            //var fent2 = new DTLeftSideView();
-            //DTFlow.LoadProfile(profile_value);
-            //fent.LoadProfile(profile_value);
-            //fent2.LoadProfile(profile_value);
             RefreshUI("DebrisTweaks.UI.MainView.bsml");
-            NotifyPropertyChanged(nameof(ModToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(forceMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(DragMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(GravityToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(RotationToggle));  // Notify the UI of the value change
         }
 
         [UIAction("saveclicked")]
         private void SaveProfile()
         {
-
-
-
-            if (profile_value == 1f)
-            {
-                config.ModToggle1 = config.ModToggle;
-                config.fixDebris1 = config.fixDebris;
-                config.forceMultiplier1 = config.forceMultiplier;
-                config.DragMultiplier1 = config.DragMultiplier;
-                config.GravityToggle1 = config.GravityToggle;
-                config.RotationToggle1 = config.RotationToggle;
-            }
-
-            if (profile_value == 2f)
-            {
-                config.ModToggle2 = config.ModToggle;
-                config.fixDebris2 = config.fixDebris;
-                config.forceMultiplier2 = config.forceMultiplier;
-                config.DragMultiplier2 = config.DragMultiplier;
-                config.GravityToggle2 = config.GravityToggle;
-                config.RotationToggle2 = config.RotationToggle;
-            }
-
-            if (profile_value == 3f)
-            {
-                config.ModToggle3 = config.ModToggle;
-                config.fixDebris3 = config.fixDebris;
-                config.forceMultiplier3 = config.forceMultiplier;
-                config.DragMultiplier3 = config.DragMultiplier;
-                config.GravityToggle3 = config.GravityToggle;
-                config.RotationToggle3 = config.RotationToggle;
-            }
-
-            if (profile_value == 4f)
-            {
-                config.ModToggle4 = config.ModToggle;
-                config.fixDebris4 = config.fixDebris;
-                config.forceMultiplier4 = config.forceMultiplier;
-                config.DragMultiplier4 = config.DragMultiplier;
-                config.GravityToggle4 = config.GravityToggle;
-                config.RotationToggle4 = config.RotationToggle;
-            }
-
-            if (profile_value == 5f)
-            {
-                config.ModToggle5 = config.ModToggle;
-                config.fixDebris5 = config.fixDebris;
-                config.forceMultiplier5 = config.forceMultiplier;
-                config.DragMultiplier5 = config.DragMultiplier;
-                config.GravityToggle5 = config.GravityToggle;
-                config.RotationToggle5 = config.RotationToggle;
-            }
-           // RefreshUI("DebrisTweaks.UI.MainView.bsml");
-            var fent = new DTSideView();
-            var fent2 = new DTLeftSideView();
-            fent.SaveProfile(profile_value);
-            fent2.SaveProfile(profile_value);
-            NotifyPropertyChanged(nameof(ModToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(forceMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(DragMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(GravityToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(RotationToggle));  // Notify the UI of the value change
+            int idx = (int)profile_value;
+            config.SaveProfile(idx);
         }
 
 
@@ -344,7 +243,6 @@ namespace DebrisTweaks.UI
         private void resetMinLifeTime()
         {
             minLifetime = 0.2f;
-            NotifyPropertyChanged(nameof(minLifetime));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.SideView.bsml");
 
         }
@@ -352,7 +250,6 @@ namespace DebrisTweaks.UI
         private void resetMaxLifeTime()
         {
             maxLifetime = 2f;
-            NotifyPropertyChanged(nameof(maxLifetime));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.SideView.bsml");
 
         }
@@ -360,7 +257,6 @@ namespace DebrisTweaks.UI
         private void resetLifeTimeOffset()
         {
             lifeTimeOffset = 0.05f;
-            NotifyPropertyChanged(nameof(lifeTimeOffset));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.SideView.bsml");
 
         }
@@ -369,142 +265,9 @@ namespace DebrisTweaks.UI
         [UIAction("loadclicked")]
         private void LoadProfile()
         {
-            var fent = new DTMainView();
-            float Val = fent.profile_value;
-            Plugin.Log.Info("Load profile from sideView success");
-
-            if (Val == 1)
-            {
-                config.CustomColourToggle = config.CustomColourToggle1;
-                config.LeftColour = config.LeftColour1;
-                config.RightColour = config.RightColour1;
-                config.minLifetime = config.minLifetime1;
-                config.maxLifetime = config.maxLifetime1;
-                config.lifeTimeOffset = config.lifeTimeOffset1;
-                config.DebrisScale = config.DebrisScale1;
-            }
-
-            if (Val == 2)
-            {
-                config.CustomColourToggle = config.CustomColourToggle2;
-                config.LeftColour = config.LeftColour2;
-                config.RightColour = config.RightColour2;
-                config.minLifetime = config.minLifetime2;
-                config.maxLifetime = config.maxLifetime2;
-                config.lifeTimeOffset = config.lifeTimeOffset2;
-                config.DebrisScale = config.DebrisScale2;
-            }
-
-            if (Val == 3)
-            {
-                config.CustomColourToggle = config.CustomColourToggle3;
-                config.LeftColour = config.LeftColour3;
-                config.RightColour = config.RightColour3;
-                config.minLifetime = config.minLifetime3;
-                config.maxLifetime = config.maxLifetime3;
-                config.lifeTimeOffset = config.lifeTimeOffset3;
-                config.DebrisScale = config.DebrisScale3;
-            }
-
-            if (Val == 4)
-            {
-                config.CustomColourToggle = config.CustomColourToggle4;
-                config.LeftColour = config.LeftColour4;
-                config.RightColour = config.RightColour4;
-                config.minLifetime = config.minLifetime4;
-                config.maxLifetime = config.maxLifetime4;
-                config.lifeTimeOffset = config.lifeTimeOffset4;
-                config.DebrisScale = config.DebrisScale4;
-            }
-
-            if (Val == 5)
-            {
-                config.CustomColourToggle = config.CustomColourToggle5;
-                config.LeftColour = config.LeftColour5;
-                config.RightColour = config.RightColour5;
-                config.minLifetime = config.minLifetime5;
-                config.maxLifetime = config.maxLifetime5;
-                config.lifeTimeOffset = config.lifeTimeOffset5;
-                config.DebrisScale = config.DebrisScale5;
-            }
-
-            NotifyPropertyChanged(nameof(CustomColourToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(LeftColour));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(RightColour));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(minLifetime));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(maxLifetime));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(lifeTimeOffset));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(DebrisScale));  // Notify the UI of the value change
+            int idx = (int)config.profile_value;
+            config.LoadProfileSide(idx);
             RefreshUI("DebrisTweaks.UI.SideView.bsml");
-
-        }
-
-        public void SaveProfile(float Val)
-        {
-            if (Val == 1)
-            {
-                config.CustomColourToggle1 = config.CustomColourToggle;
-                config.LeftColour1 = config.LeftColour;
-                config.RightColour1 = config.RightColour;
-                config.minLifetime1 = config.minLifetime;
-                config.maxLifetime1 = config.maxLifetime;
-                config.lifeTimeOffset1 = config.lifeTimeOffset;
-                config.DebrisScale1 = config.DebrisScale;
-            }
-
-            if (Val == 2)
-            {
-                config.CustomColourToggle2 = config.CustomColourToggle;
-                config.LeftColour2 = config.LeftColour;
-                config.RightColour2 = config.RightColour;
-                config.minLifetime2 = config.minLifetime;
-                config.maxLifetime2 = config.maxLifetime;
-                config.lifeTimeOffset2 = config.lifeTimeOffset;
-                config.DebrisScale2 = config.DebrisScale;
-            }
-
-            if (Val == 3)
-            {
-                config.CustomColourToggle3 = config.CustomColourToggle;
-                config.LeftColour3 = config.LeftColour;
-                config.RightColour3 = config.RightColour;
-                config.minLifetime3 = config.minLifetime;
-                config.maxLifetime3 = config.maxLifetime;
-                config.lifeTimeOffset3 = config.lifeTimeOffset;
-                config.DebrisScale3 = config.DebrisScale;
-            }
-
-            if (Val == 4)
-            {
-                config.CustomColourToggle4 = config.CustomColourToggle;
-                config.LeftColour4 = config.LeftColour;
-                config.RightColour4 = config.RightColour;
-                config.minLifetime4 = config.minLifetime;
-                config.maxLifetime4 = config.maxLifetime;
-                config.lifeTimeOffset4 = config.lifeTimeOffset;
-                config.DebrisScale4 = config.DebrisScale;
-            }
-
-            if (Val == 5)
-            {
-                config.CustomColourToggle5 = config.CustomColourToggle;
-                config.LeftColour5 = config.LeftColour;
-                config.RightColour5 = config.RightColour;
-                config.minLifetime5 = config.minLifetime;
-                config.maxLifetime5 = config.maxLifetime;
-                config.lifeTimeOffset5 = config.lifeTimeOffset;
-                config.DebrisScale5 = config.DebrisScale;
-            }
-
-            NotifyPropertyChanged(nameof(CustomColourToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(LeftColour));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(RightColour));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(minLifetime));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(maxLifetime));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(lifeTimeOffset));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(DebrisScale));  // Notify the UI of the value change
-            //RefreshUI("DebrisTweaks.UI.SideView.bsml");
-
         }
 
         public void RefreshUI(string BSMLLocation)
@@ -604,7 +367,6 @@ namespace DebrisTweaks.UI
         private void ResetMoveSpeedMultiplier()
         {
             moveSpeedMultiplier = 0.5f;
-            NotifyPropertyChanged(nameof(moveSpeedMultiplier));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
@@ -613,7 +375,6 @@ namespace DebrisTweaks.UI
         private void ResetCutDirMultiplier()
         {
             cutDirMultiplier = 1.2f;
-            NotifyPropertyChanged(nameof(cutDirMultiplier));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
@@ -622,7 +383,6 @@ namespace DebrisTweaks.UI
         private void ResetFromCenterSpeed()
         {
             fromCenterSpeed = 4f;
-            NotifyPropertyChanged(nameof(fromCenterSpeed));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
@@ -631,7 +391,6 @@ namespace DebrisTweaks.UI
         private void resetRotation()
         {
             rotation = 4f;
-            NotifyPropertyChanged(nameof(rotation));  // Notify the UI of the value change
             RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
 
         }
@@ -639,183 +398,11 @@ namespace DebrisTweaks.UI
         [UIAction("loadclicked")]
         private void LoadProfile()
         {
-            Plugin.Log.Info("Load profile from leftSideView success");
-            var fent = new DTMainView();
-            float Val = fent.profile_value;
-            if (Val == 1)
-            {
-                config.moveSpeedMultiplier = config.moveSpeedMultiplier1;
-                config.adjustVerticalForceToggle = config.adjustVerticalForceToggle1;
-                config.cutDirMultiplier = config.cutDirMultiplier1;
-                config.fromCenterSpeed = config.fromCenterSpeed1;
-                config.rotation = config.rotation1;
-                config.randomRotationToggle = config.randomRotationToggle1; 
-                config.randomRotation = config.randomRotation1;
-                config.randomCutFromCenter = config.randomCutFromCenter1;
-                config.dynamicDebrisToggle = config.dynamicDebrisToggle1;
-                config.saberSens = config.saberSens1;
-
-            }
-
-            if (Val == 2)
-            {
-                config.moveSpeedMultiplier = config.moveSpeedMultiplier2;
-                config.adjustVerticalForceToggle = config.adjustVerticalForceToggle2;
-                config.cutDirMultiplier = config.cutDirMultiplier2;
-                config.fromCenterSpeed = config.fromCenterSpeed2;
-                config.rotation = config.rotation2;
-                config.randomRotationToggle = config.randomRotationToggle2;
-                config.randomRotation = config.randomRotation2;
-                config.randomCutFromCenter = config.randomCutFromCenter2;
-                config.dynamicDebrisToggle = config.dynamicDebrisToggle2;
-                config.saberSens = config.saberSens2;
-            }
-
-            if (Val == 3)
-            {
-                config.moveSpeedMultiplier = config.moveSpeedMultiplier3;
-                config.adjustVerticalForceToggle = config.adjustVerticalForceToggle3;
-                config.cutDirMultiplier = config.cutDirMultiplier3;
-                config.fromCenterSpeed = config.fromCenterSpeed3;
-                config.rotation = config.rotation3;
-                config.randomRotationToggle = config.randomRotationToggle3;
-                config.randomRotation = config.randomRotation3;
-                config.randomCutFromCenter = config.randomCutFromCenter3;
-                config.dynamicDebrisToggle = config.dynamicDebrisToggle3;
-                config.saberSens = config.saberSens3;
-            }
-
-            if (Val == 4)
-            {
-                config.moveSpeedMultiplier = config.moveSpeedMultiplier4;
-                config.adjustVerticalForceToggle = config.adjustVerticalForceToggle4;
-                config.cutDirMultiplier = config.cutDirMultiplier4;
-                config.fromCenterSpeed = config.fromCenterSpeed4;
-                config.rotation = config.rotation4;
-                config.randomRotationToggle = config.randomRotationToggle4;
-                config.randomRotation = config.randomRotation4;
-                config.randomCutFromCenter = config.randomCutFromCenter4;
-                config.dynamicDebrisToggle = config.dynamicDebrisToggle4;
-                config.saberSens = config.saberSens4;
-            }
-
-            if (Val == 5)
-            {
-                config.moveSpeedMultiplier = config.moveSpeedMultiplier5;
-                config.adjustVerticalForceToggle = config.adjustVerticalForceToggle5;
-                config.cutDirMultiplier = config.cutDirMultiplier5;
-                config.fromCenterSpeed = config.fromCenterSpeed5;
-                config.rotation = config.rotation5;
-                config.randomRotationToggle = config.randomRotationToggle5;
-                config.randomRotation = config.randomRotation5;
-                config.randomCutFromCenter = config.randomCutFromCenter5;
-                config.dynamicDebrisToggle = config.dynamicDebrisToggle5;
-                config.saberSens = config.saberSens5;
-            }
-            NotifyPropertyChanged(nameof(moveSpeedMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(adjustVerticalForceToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(cutDirMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(fromCenterSpeed));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(rotation));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomRotationToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomCutFromCenter));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomRotation));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(dynamicDebrisToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(saberSens));  // Notify the UI of the value change
+            int idx = (int)config.profile_value;
+            config.LoadProfileLeft(idx);
             RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
-
-
-
         }
 
-        public void SaveProfile(float Val)
-        {
-            if (Val == 1)
-            {
-                config.moveSpeedMultiplier1 = config.moveSpeedMultiplier;
-                config.adjustVerticalForceToggle1 = config.adjustVerticalForceToggle;
-                config.cutDirMultiplier1 = config.cutDirMultiplier;
-                config.fromCenterSpeed1 = config.fromCenterSpeed;
-                config.rotation1 = config.rotation;
-                config.randomRotationToggle1 = config.randomRotationToggle;
-                config.randomRotation1 = config.randomRotation;
-                config.randomCutFromCenter1 = config.randomCutFromCenter;
-                config.dynamicDebrisToggle1 = config.dynamicDebrisToggle;
-                config.saberSens1 = config.saberSens;
-
-            }
-
-            if (Val == 2)
-            {
-                config.moveSpeedMultiplier2 = config.moveSpeedMultiplier;
-                config.adjustVerticalForceToggle2 = config.adjustVerticalForceToggle;
-                config.cutDirMultiplier2 = config.cutDirMultiplier;
-                config.fromCenterSpeed2 = config.fromCenterSpeed;
-                config.rotation2 = config.rotation;
-                config.randomRotationToggle2 = config.randomRotationToggle;
-                config.randomRotation2 = config.randomRotation;
-                config.randomCutFromCenter2 = config.randomCutFromCenter;
-                config.dynamicDebrisToggle2 = config.dynamicDebrisToggle;
-                config.saberSens2 = config.saberSens;
-            }
-
-            if (Val == 3)
-            {
-                config.moveSpeedMultiplier3 = config.moveSpeedMultiplier;
-                config.adjustVerticalForceToggle3 = config.adjustVerticalForceToggle;
-                config.cutDirMultiplier3 = config.cutDirMultiplier;
-                config.fromCenterSpeed3 = config.fromCenterSpeed;
-                config.rotation3 = config.rotation;
-                config.randomRotationToggle3 = config.randomRotationToggle;
-                config.randomRotation3 = config.randomRotation;
-                config.randomCutFromCenter3 = config.randomCutFromCenter;
-                config.dynamicDebrisToggle3 = config.dynamicDebrisToggle;
-                config.saberSens3 = config.saberSens;
-            }
-
-            if (Val == 4)
-            {
-                config.moveSpeedMultiplier4 = config.moveSpeedMultiplier;
-                config.adjustVerticalForceToggle4 = config.adjustVerticalForceToggle;
-                config.cutDirMultiplier4 = config.cutDirMultiplier;
-                config.fromCenterSpeed4 = config.fromCenterSpeed;
-                config.rotation4 = config.rotation;
-                config.randomRotationToggle4 = config.randomRotationToggle;
-                config.randomRotation4 = config.randomRotation;
-                config.randomCutFromCenter4 = config.randomCutFromCenter;
-                config.dynamicDebrisToggle4 = config.dynamicDebrisToggle;
-                config.saberSens4 = config.saberSens;
-            }
-
-            if (Val == 5)
-            {
-                config.moveSpeedMultiplier5 = config.moveSpeedMultiplier;
-                config.adjustVerticalForceToggle5 = config.adjustVerticalForceToggle;
-                config.cutDirMultiplier5 = config.cutDirMultiplier;
-                config.fromCenterSpeed5 = config.fromCenterSpeed;
-                config.rotation5 = config.rotation;
-                config.randomRotationToggle5 = config.randomRotationToggle;
-                config.randomRotation5 = config.randomRotation;
-                config.randomCutFromCenter5 = config.randomCutFromCenter;
-                config.dynamicDebrisToggle5 = config.dynamicDebrisToggle;
-                config.saberSens5 = config.saberSens;
-            }
-
-            NotifyPropertyChanged(nameof(moveSpeedMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(adjustVerticalForceToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(cutDirMultiplier));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(fromCenterSpeed));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(rotation));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomRotationToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomCutFromCenter));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(randomRotation));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(dynamicDebrisToggle));  // Notify the UI of the value change
-            NotifyPropertyChanged(nameof(saberSens));  // Notify the UI of the value change
-            //RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
-
-        }
-
-        // Helper method to refresh existing UI elements
         public void RefreshUI(string BSMLLocation)
         {
             Plugin.Log.Info("Refresh Successful");

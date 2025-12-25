@@ -2,8 +2,8 @@
     "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
     "id": "DebrisTweaks+",
     "name": "DebrisTweaks+",
-    "author": "IDK",
-    "version": "1.1.9",
+    "author": "idkcode22",
+    "version": "1.2.1",
     "description": "Add more tweaks to the debris!",
     "gameVersion": "1.39.1",
     "dependsOn": {
