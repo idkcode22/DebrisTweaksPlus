@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using IPA.Config.Stores;
 using IPA.Config.Stores.Attributes;
 using IPA.Config.Stores.Converters;
 using UnityEngine;
+using System.Reflection;
+using System.Linq;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace DebrisTweaks
@@ -36,7 +39,11 @@ namespace DebrisTweaks
         public bool dynamicDebrisToggle { get; set; } = false;
         public float saberSens { get; set; } = 40f;
 
-        public float DragMultiplier { get; set; } = 1f;
+        public float Drag { get; set; } = 0f;
+        public bool RandomDrag { get; set; } = false;
+        public float DragMin { get; set; } = 1f;
+        public float DragMax { get; set; } = 1f;
+
         public bool GravityToggle { get; set; } = true;
         public bool RotationToggle { get; set; } = false;
 
@@ -48,16 +55,129 @@ namespace DebrisTweaks
         //profile garbage
         public float profile_value { get; set; } = 1f;
 
-        public bool ModToggle1 { get; set; } public bool fixDebris1 { get; set; }  = false; public float minLifetime1 { get; set; } = 0.2f; public float maxLifetime1 { get; set; } = 2f; public float lifeTimeOffset1 { get; set; } = 0.05f; public float rotation1 { get; set; } = 4f; public float cutDirMultiplier1 { get; set; } = 1.2f; public float fromCenterSpeed1 { get; set; } = 4f; public float randomCutFromCenter1 { get; set; } = 0.1f; public float moveSpeedMultiplier1 { get; set; } = 0.5f; public float forceMultiplier1 { get; set; } = 1f; public bool adjustVerticalForceToggle1 { get; set; } = true; public bool randomRotationToggle1 { get; set; } = false; public float randomRotation1 { get; set; } = 1f; public float DebrisScale1 { get; set; } = 1f; public bool dynamicDebrisToggle1 { get; set; } = false; public float saberSens1 { get; set; } = 40f; public float DragMultiplier1 { get; set; } = 1f; public bool GravityToggle1 { get; set; } = true; public bool RotationToggle1 { get; set; } = false; public Color LeftColour1 { get; set; } = Color.red; public Color RightColour1 { get; set; } = Color.blue; public bool CustomColourToggle1 { get; set; } = false;
+        public bool ModToggle1 { get; set; } = true; public bool fixDebris1 { get; set; } = false; public float minLifetime1 { get; set; } = 0.2f; public float maxLifetime1 { get; set; } = 2f; public float lifeTimeOffset1 { get; set; } = 0.05f; public float rotation1 { get; set; } = 4f; public float cutDirMultiplier1 { get; set; } = 1.2f; public float fromCenterSpeed1 { get; set; } = 4f; public float randomCutFromCenter1 { get; set; } = 0.1f; public float moveSpeedMultiplier1 { get; set; } = 0.5f; public float forceMultiplier1 { get; set; } = 1f; public bool adjustVerticalForceToggle1 { get; set; } = true; public bool randomRotationToggle1 { get; set; } = false; public float randomRotation1 { get; set; } = 1f; public float DebrisScale1 { get; set; } = 1f; public bool dynamicDebrisToggle1 { get; set; } = false; public float saberSens1 { get; set; } = 40f; public float Drag1 { get; set; } = 1f; public bool RandomDrag1 { get; set; } = false; public float DragMin1 { get; set; } = 1f; public float DragMax1 { get; set; } = 1f; public bool GravityToggle1 { get; set; } = true; public bool RotationToggle1 { get; set; } = false; public Color LeftColour1 { get; set; } = Color.red; public Color RightColour1 { get; set; } = Color.blue; public bool CustomColourToggle1 { get; set; } = false;
+        public bool ModToggle2 { get; set; } = true; public bool fixDebris2 { get; set; } = false; public float minLifetime2 { get; set; } = 0.2f; public float maxLifetime2 { get; set; } = 2f; public float lifeTimeOffset2 { get; set; } = 0.05f; public float rotation2 { get; set; } = 4f; public float cutDirMultiplier2 { get; set; } = 1.2f; public float fromCenterSpeed2 { get; set; } = 4f; public float randomCutFromCenter2 { get; set; } = 0.1f; public float moveSpeedMultiplier2 { get; set; } = 0.5f; public float forceMultiplier2 { get; set; } = 1f; public bool adjustVerticalForceToggle2 { get; set; } = true; public bool randomRotationToggle2 { get; set; } = false; public float randomRotation2 { get; set; } = 1f; public float DebrisScale2 { get; set; } = 1f; public bool dynamicDebrisToggle2 { get; set; } = false; public float saberSens2 { get; set; } = 40f; public float Drag2 { get; set; } = 1f; public bool RandomDrag2 { get; set; } = false; public float DragMin2 { get; set; } = 1f; public float DragMax2 { get; set; } = 1f; public bool GravityToggle2 { get; set; } = true; public bool RotationToggle2 { get; set; } = false; public Color LeftColour2 { get; set; } = Color.red; public Color RightColour2 { get; set; } = Color.blue; public bool CustomColourToggle2 { get; set; } = false;
+        public bool ModToggle3 { get; set; } = true; public bool fixDebris3 { get; set; } = false; public float minLifetime3 { get; set; } = 0.2f; public float maxLifetime3 { get; set; } = 2f; public float lifeTimeOffset3 { get; set; } = 0.05f; public float rotation3 { get; set; } = 4f; public float cutDirMultiplier3 { get; set; } = 1.2f; public float fromCenterSpeed3 { get; set; } = 4f; public float randomCutFromCenter3 { get; set; } = 0.1f; public float moveSpeedMultiplier3 { get; set; } = 0.5f; public float forceMultiplier3 { get; set; } = 1f; public bool adjustVerticalForceToggle3 { get; set; } = true; public bool randomRotationToggle3 { get; set; } = false; public float randomRotation3 { get; set; } = 1f; public float DebrisScale3 { get; set; } = 1f; public bool dynamicDebrisToggle3 { get; set; } = false; public float saberSens3 { get; set; } = 40f; public float Drag3 { get; set; } = 1f; public bool RandomDrag3 { get; set; } = false; public float DragMin3 { get; set; } = 1f; public float DragMax3 { get; set; } = 1f; public bool GravityToggle3 { get; set; } = true; public bool RotationToggle3 { get; set; } = false; public Color LeftColour3 { get; set; } = Color.red; public Color RightColour3 { get; set; } = Color.blue; public bool CustomColourToggle3 { get; set; } = false;
+        public bool ModToggle4 { get; set; } = true; public bool fixDebris4 { get; set; } = false; public float minLifetime4 { get; set; } = 0.2f; public float maxLifetime4 { get; set; } = 2f; public float lifeTimeOffset4 { get; set; } = 0.05f; public float rotation4 { get; set; } = 4f; public float cutDirMultiplier4 { get; set; } = 1.2f; public float fromCenterSpeed4 { get; set; } = 4f; public float randomCutFromCenter4 { get; set; } = 0.1f; public float moveSpeedMultiplier4 { get; set; } = 0.5f; public float forceMultiplier4 { get; set; } = 1f; public bool adjustVerticalForceToggle4 { get; set; } = true; public bool randomRotationToggle4 { get; set; } = false; public float randomRotation4 { get; set; } = 1f; public float DebrisScale4 { get; set; } = 1f; public bool dynamicDebrisToggle4 { get; set; } = false; public float saberSens4 { get; set; } = 40f; public float Drag4 { get; set; } = 1f; public bool RandomDrag4 { get; set; } = false; public float DragMin4 { get; set; } = 1f; public float DragMax4 { get; set; } = 1f; public bool GravityToggle4 { get; set; } = true; public bool RotationToggle4 { get; set; } = false; public Color LeftColour4 { get; set; } = Color.red; public Color RightColour4 { get; set; } = Color.blue; public bool CustomColourToggle4 { get; set; } = false;
+        public bool ModToggle5 { get; set; } = true; public bool fixDebris5 { get; set; } = false; public float minLifetime5 { get; set; } = 0.2f; public float maxLifetime5 { get; set; } = 2f; public float lifeTimeOffset5 { get; set; } = 0.05f; public float rotation5 { get; set; } = 4f; public float cutDirMultiplier5 { get; set; } = 1.2f; public float fromCenterSpeed5 { get; set; } = 4f; public float randomCutFromCenter5 { get; set; } = 0.1f; public float moveSpeedMultiplier5 { get; set; } = 0.5f; public float forceMultiplier5 { get; set; } = 1f; public bool adjustVerticalForceToggle5 { get; set; } = true; public bool randomRotationToggle5 { get; set; } = false; public float randomRotation5 { get; set; } = 1f; public float DebrisScale5 { get; set; } = 1f; public bool dynamicDebrisToggle5 { get; set; } = false; public float saberSens5 { get; set; } = 40f; public float Drag5 { get; set; } = 1f; public bool RandomDrag5 { get; set; } = false; public float DragMin5 { get; set; } = 1f; public float DragMax5 { get; set; } = 1f; public bool GravityToggle5 { get; set; } = true; public bool RotationToggle5 { get; set; } = false; public Color LeftColour5 { get; set; } = Color.red; public Color RightColour5 { get; set; } = Color.blue; public bool CustomColourToggle5 { get; set; } = false;
 
-        public bool ModToggle2 { get; set; } public bool fixDebris2 { get; set; } = false; public float minLifetime2 { get; set; } = 0.2f; public float maxLifetime2 { get; set; } = 2f; public float lifeTimeOffset2 { get; set; } = 0.05f; public float rotation2 { get; set; } = 4f; public float cutDirMultiplier2 { get; set; } = 1.2f; public float fromCenterSpeed2 { get; set; } = 4f; public float randomCutFromCenter2 { get; set; } = 0.1f; public float moveSpeedMultiplier2 { get; set; } = 0.5f; public float forceMultiplier2 { get; set; } = 1f; public bool adjustVerticalForceToggle2 { get; set; } = true; public bool randomRotationToggle2 { get; set; } = false; public float randomRotation2 { get; set; } = 1f; public float DebrisScale2 { get; set; } = 1f; public bool dynamicDebrisToggle2 { get; set; } = false; public float saberSens2 { get; set; } = 40f; public float DragMultiplier2 { get; set; } = 1f; public bool GravityToggle2 { get; set; } = true; public bool RotationToggle2 { get; set; } = false; public Color LeftColour2 { get; set; } = Color.red; public Color RightColour2 { get; set; } = Color.blue; public bool CustomColourToggle2 { get; set; } = false;
+        // Quick helpers to copy values to/from the numbered profile fields.
+        // These use reflection so adding new base properties doesn't require editing these methods.
+        public void SaveProfile(int slot)
+        {
+            if (slot < 1) slot = 1;
+            var suffix = slot.ToString();
+            var allProps = typeof(Config).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite);
 
-        public bool ModToggle3 { get; set; } = true; public bool fixDebris3 { get; set; } = false; public float minLifetime3 { get; set; } = 0.2f; public float maxLifetime3 { get; set; } = 2f; public float lifeTimeOffset3 { get; set; } = 0.05f; public float rotation3 { get; set; } = 4f; public float cutDirMultiplier3 { get; set; } = 1.2f; public float fromCenterSpeed3 { get; set; } = 4f; public float randomCutFromCenter3 { get; set; } = 0.1f; public float moveSpeedMultiplier3 { get; set; } = 0.5f; public float forceMultiplier3 { get; set; } = 1f; public bool adjustVerticalForceToggle3 { get; set; } = true; public bool randomRotationToggle3 { get; set; } = false; public float randomRotation3 { get; set; } = 1f; public float DebrisScale3 { get; set; } = 1f; public bool dynamicDebrisToggle3 { get; set; } = false; public float saberSens3 { get; set; } = 40f; public float DragMultiplier3 { get; set; } = 1f; public bool GravityToggle3 { get; set; } = true; public bool RotationToggle3 { get; set; } = false; public Color LeftColour3 { get; set; } = Color.red; public Color RightColour3 { get; set; } = Color.blue; public bool CustomColourToggle3 { get; set; } = false;
+            foreach (var baseProp in allProps)
+            {
+                // skip base properties that are already the numbered ones, and profile_value
+                if (baseProp.Name == nameof(profile_value)) continue;
+                if (baseProp.Name.EndsWith(suffix)) continue;
 
-        public bool ModToggle4 { get; set; } = true; public bool fixDebris4 { get; set; } = false; public float minLifetime4 { get; set; } = 0.2f; public float maxLifetime4 { get; set; } = 2f; public float lifeTimeOffset4 { get; set; } = 0.05f; public float rotation4 { get; set; } = 4f; public float cutDirMultiplier4 { get; set; } = 1.2f; public float fromCenterSpeed4 { get; set; } = 4f; public float randomCutFromCenter4 { get; set; } = 0.1f; public float moveSpeedMultiplier4 { get; set; } = 0.5f; public float forceMultiplier4 { get; set; } = 1f; public bool adjustVerticalForceToggle4 { get; set; } = true; public bool randomRotationToggle4 { get; set; } = false; public float randomRotation4 { get; set; } = 1f; public float DebrisScale4 { get; set; } = 1f; public bool dynamicDebrisToggle4 { get; set; } = false; public float saberSens4 { get; set; } = 40f; public float DragMultiplier4 { get; set; } = 1f; public bool GravityToggle4 { get; set; } = true; public bool RotationToggle4 { get; set; } = false; public Color LeftColour4 { get; set; } = Color.red; public Color RightColour4 { get; set; } = Color.blue; public bool CustomColourToggle4 { get; set; } = false;
+                var targetProp = typeof(Config).GetProperty(baseProp.Name + suffix, BindingFlags.Public | BindingFlags.Instance);
+                if (targetProp == null) continue;
+                if (!targetProp.CanWrite) continue;
+                if (targetProp.PropertyType != baseProp.PropertyType) continue;
 
-        public bool ModToggle5 { get; set; } = true; public bool fixDebris5 { get; set; } = false; public float minLifetime5 { get; set; } = 0.2f; public float maxLifetime5 { get; set; } = 2f; public float lifeTimeOffset5 { get; set; } = 0.05f; public float rotation5 { get; set; } = 4f; public float cutDirMultiplier5 { get; set; } = 1.2f; public float fromCenterSpeed5 { get; set; } = 4f; public float randomCutFromCenter5 { get; set; } = 0.1f; public float moveSpeedMultiplier5 { get; set; } = 0.5f; public float forceMultiplier5 { get; set; } = 1f; public bool adjustVerticalForceToggle5 { get; set; } = true; public bool randomRotationToggle5 { get; set; } = false; public float randomRotation5 { get; set; } = 1f; public float DebrisScale5 { get; set; } = 1f; public bool dynamicDebrisToggle5 { get; set; } = false; public float saberSens5 { get; set; } = 40f; public float DragMultiplier5 { get; set; } = 1f; public bool GravityToggle5 { get; set; } = true; public bool RotationToggle5 { get; set; } = false; public Color LeftColour5 { get; set; } = Color.red; public Color RightColour5 { get; set; } = Color.blue; public bool CustomColourToggle5 { get; set; } = false;
+                var val = baseProp.GetValue(this);
+                targetProp.SetValue(this, val);
+            }
+        }
 
+        public void LoadProfile(int slot)
+        {
+            if (slot < 1) slot = 1;
+            var suffix = slot.ToString();
+            var allProps = typeof(Config).GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Where(p => p.CanRead && p.CanWrite);
 
+            foreach (var baseProp in allProps)
+            {
+                // skip base properties that are already the numbered ones, and profile_value
+                if (baseProp.Name == nameof(profile_value)) continue;
+                if (baseProp.Name.EndsWith(suffix)) continue;
+
+                var sourceProp = typeof(Config).GetProperty(baseProp.Name + suffix, BindingFlags.Public | BindingFlags.Instance);
+                if (sourceProp == null) continue;
+                if (!sourceProp.CanRead) continue;
+                if (sourceProp.PropertyType != baseProp.PropertyType) continue;
+
+                var val = sourceProp.GetValue(this);
+                baseProp.SetValue(this, val);
+            }
+        }
+
+        // --- New: view-scoped load helpers (only load specific screen fields) --
+
+        // Copies from numbered slot into active config but only for Main view properties.
+        public void LoadProfileMain(int slot)
+        {
+            var keys = new[]
+            {
+                "ModToggle",
+                "fixDebris",
+                "forceMultiplier",
+                "Drag",
+                "RandomDrag",
+                "DragMin",
+                "DragMax",
+                "GravityToggle",
+                "RotationToggle"
+            };
+            LoadSelectedFromSlot(slot, keys);
+        }
+
+        // Side view (colors, lifetime, debris scale)
+        public void LoadProfileSide(int slot)
+        {
+            var keys = new[]
+            {
+                "CustomColourToggle",
+                "LeftColour",
+                "RightColour",
+                "minLifetime",
+                "maxLifetime",
+                "lifeTimeOffset",
+                "DebrisScale"
+            };
+            LoadSelectedFromSlot(slot, keys);
+        }
+
+        // Left side view (movement / rotation)
+        public void LoadProfileLeft(int slot)
+        {
+            var keys = new[]
+            {
+                "moveSpeedMultiplier",
+                "adjustVerticalForceToggle",
+                "cutDirMultiplier",
+                "fromCenterSpeed",
+                "rotation",
+                "randomRotationToggle",
+                "randomRotation",
+                "randomCutFromCenter",
+                "dynamicDebrisToggle",
+                "saberSens"
+            };
+            LoadSelectedFromSlot(slot, keys);
+        }
+
+        private void LoadSelectedFromSlot(int slot, IEnumerable<string> propertyNames)
+        {
+            if (slot < 1) slot = 1;
+            var suffix = slot.ToString();
+            foreach (var name in propertyNames)
+            {
+                var sourceProp = typeof(Config).GetProperty(name + suffix, BindingFlags.Public | BindingFlags.Instance);
+                var baseProp = typeof(Config).GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+                if (sourceProp == null || baseProp == null) continue;
+                if (!sourceProp.CanRead || !baseProp.CanWrite) continue;
+                if (sourceProp.PropertyType != baseProp.PropertyType) continue;
+                var val = sourceProp.GetValue(this);
+                baseProp.SetValue(this, val);
+            }
+        }
     }
 }

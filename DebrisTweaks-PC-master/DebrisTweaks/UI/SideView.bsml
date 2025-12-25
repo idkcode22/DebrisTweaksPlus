@@ -26,6 +26,6 @@
 
 
 
-		<text text=" " font-size="16"/>
+		<text text="_ " font-size="16"/>
 	</vertical>
 </bg>

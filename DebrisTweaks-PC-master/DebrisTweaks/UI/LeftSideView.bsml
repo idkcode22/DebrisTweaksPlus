@@ -27,7 +27,7 @@
 		<slider-setting apply-on-change="true" value="randomRotation" id="randomRotationID" text="Random Rotation Speed" show-buttons="true" min="0" max="10" increment="1" hover-hint='When you slice the note it randomly spin the debris'/>
 		<button align='Center' on-click='loadclicked' text='Load' hover-hint='Load profile for this screen'></button>
 
-		<text text=" " font-size="10"/>
+		<text text="_ " font-size="10"/>
 
 	</vertical>
 </bg>

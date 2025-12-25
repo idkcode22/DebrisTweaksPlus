@@ -2,10 +2,10 @@
     "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
     "id": "DebrisTweaks+",
     "name": "DebrisTweaks+",
-    "author": "IDK",
-    "version": "1.2.0",
+    "author": "idkcode22",
+    "version": "1.2.1",
     "description": "Add more tweaks to the debris!",
-    "gameVersion": "1.40.8",
+    "gameVersion": "1.42.0",
     "dependsOn": {
         "BSIPA": "^4.3.6",
         "BeatSaberMarkupLanguage": "^1.12.5",
