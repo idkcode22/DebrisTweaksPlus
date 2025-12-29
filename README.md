@@ -20,5 +20,6 @@ I used this GitHub to make this mod, which is where most of the code came from: 
 2. Download and extract the "Plugins.zip" from the releases
 3. Then select the "Plugins" folder
 4. Move the folder where you have Beat Saber installed
+5. Or drag the DebrisTweaks+.zip into the mods section of bsmanager.
    
 
