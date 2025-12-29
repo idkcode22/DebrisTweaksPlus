@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using System.Reflection;
 using BeatSaberMarkupLanguage;
@@ -5,8 +6,8 @@ using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.MenuButtons;
 using BeatSaberMarkupLanguage.ViewControllers;
 using DebrisTweaks.OnlineUI;
+using HarmonyLib;
 using HMUI;
-using JetBrains.Annotations;
 using UnityEngine;
 
 
@@ -47,9 +48,9 @@ namespace DebrisTweaks.UI
             BeatSaberUI.PresentFlowCoordinator(_parentFlow, this);
             if (GameplaySetupPanel.refreshMain)
             {
-                mainView?.RefreshUI("DebrisTweaks.UI.MainView.bsml");
-                sideView?.RefreshUI("DebrisTweaks.UI.SideView.bsml");
-                leftSideView?.RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
+                BsmlWrapper.RefreshUI(mainView, "DebrisTweaks.UI.MainView.bsml");
+                BsmlWrapper.RefreshUI(sideView, "DebrisTweaks.UI.SideView.bsml");
+                BsmlWrapper.RefreshUI(leftSideView, "DebrisTweaks.UI.LeftSideView.bsml");
                 GameplaySetupPanel.refreshMain = false;
             }
 
@@ -157,7 +158,7 @@ namespace DebrisTweaks.UI
             int idx = (int)profile_value;
             config.LoadProfileMain(idx);
 
-            RefreshUI("DebrisTweaks.UI.MainView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.MainView.bsml");
         }
 
         [UIAction("saveclicked")]
@@ -166,20 +167,45 @@ namespace DebrisTweaks.UI
             int idx = (int)profile_value;
             config.SaveProfile(idx);
         }
-
-
-        public void RefreshUI(string BSMLLocation)
+        [UIAction("test-debris")]
+        internal void TestDebris()
         {
-            foreach (var child in gameObject.transform.Cast<Transform>().ToList())
+            var objs = Resources.FindObjectsOfTypeAll(typeof(SimpleLevelStarter));
+
+            foreach (var lstartObj in objs)
             {
-                GameObject.Destroy(child.gameObject);
+                var lstart = (SimpleLevelStarter)lstartObj;
+                if (lstart.gameObject.name == "PerformanceTestLevelButton")
+                {
+                    // Reflect private method
+                    var startLevelMethod = AccessTools.Method(typeof(SimpleLevelStarter), "StartLevel");
+                    var routine = (IEnumerator)startLevelMethod.Invoke(lstart, null);
+
+                    // Start coroutine on guaranteed active runner
+                    GlobalCoroutineRunner.Instance.StartCoroutine(routine);
+
+                    return;
+                }
             }
 
-            BSMLParser.Instance.Parse(Utilities.GetResourceContent(
-            Assembly.GetExecutingAssembly(), BSMLLocation), this.gameObject, this);
         }
-
-
+        public class GlobalCoroutineRunner : MonoBehaviour
+        {
+            private static GlobalCoroutineRunner _instance;
+            public static GlobalCoroutineRunner Instance
+            {
+                get
+                {
+                    if (_instance == null)
+                    {
+                        var go = new GameObject("GlobalCoroutineRunner");
+                        Object.DontDestroyOnLoad(go);
+                        _instance = go.AddComponent<GlobalCoroutineRunner>();
+                    }
+                    return _instance;
+                }
+            }
+        }
     }
 
     [HotReload(RelativePathToLayout = @"./SideView.bsml")]
@@ -243,21 +269,21 @@ namespace DebrisTweaks.UI
         private void resetMinLifeTime()
         {
             minLifetime = 0.2f;
-            RefreshUI("DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.SideView.bsml");
 
         }
         [UIAction("resetMaxLifeTime")]
         private void resetMaxLifeTime()
         {
             maxLifetime = 2f;
-            RefreshUI("DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.SideView.bsml");
 
         }
         [UIAction("resetLifeTimeOffset")]
         private void resetLifeTimeOffset()
         {
             lifeTimeOffset = 0.05f;
-            RefreshUI("DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.SideView.bsml");
 
         }
 
@@ -267,19 +293,9 @@ namespace DebrisTweaks.UI
         {
             int idx = (int)config.profile_value;
             config.LoadProfileSide(idx);
-            RefreshUI("DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.SideView.bsml");
         }
 
-        public void RefreshUI(string BSMLLocation)
-        {
-            foreach (var child in gameObject.transform.Cast<Transform>().ToList())
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-
-            BSMLParser.Instance.Parse(Utilities.GetResourceContent(
-            Assembly.GetExecutingAssembly(), BSMLLocation), this.gameObject, this);
-        }
     }
 
 
@@ -367,7 +383,7 @@ namespace DebrisTweaks.UI
         private void ResetMoveSpeedMultiplier()
         {
             moveSpeedMultiplier = 0.5f;
-            RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
 
         }
 
@@ -375,7 +391,7 @@ namespace DebrisTweaks.UI
         private void ResetCutDirMultiplier()
         {
             cutDirMultiplier = 1.2f;
-            RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
 
         }
 
@@ -383,7 +399,7 @@ namespace DebrisTweaks.UI
         private void ResetFromCenterSpeed()
         {
             fromCenterSpeed = 4f;
-            RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
 
         }
 
@@ -391,7 +407,7 @@ namespace DebrisTweaks.UI
         private void resetRotation()
         {
             rotation = 4f;
-            RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
 
         }
         // profile stuff
@@ -400,32 +416,26 @@ namespace DebrisTweaks.UI
         {
             int idx = (int)config.profile_value;
             config.LoadProfileLeft(idx);
-            RefreshUI("DebrisTweaks.UI.LeftSideView.bsml");
-        }
-
-        public void RefreshUI(string BSMLLocation)
-        {
-            Plugin.Log.Info("Refresh Successful");
-            foreach (var child in gameObject.transform.Cast<Transform>().ToList())
-            {
-                GameObject.Destroy(child.gameObject);
-            }
-
-            BSMLParser.Instance.Parse(Utilities.GetResourceContent(
-            Assembly.GetExecutingAssembly(), BSMLLocation), this.gameObject, this);
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
         }
 
     }
 
     public static class BsmlWrapper
     {
-        public static void EnableUI()
+        public static void EnableUI() => DTFlow.Initialise();
+        public static void DisableUI() => DTFlow.Deinit();
+
+        public static void RefreshUI(BSMLAutomaticViewController instance, string bsmlLocation)
         {
-            DTFlow.Initialise();
-        }
-        public static void DisableUI()
-        {
-            DTFlow.Deinit();
+            foreach (var child in instance.gameObject.transform.Cast<Transform>().ToList())
+                GameObject.Destroy(child.gameObject);
+
+            BSMLParser.Instance.Parse(
+                Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), bsmlLocation),
+                instance.gameObject,
+                instance
+            );
         }
     }
 }
