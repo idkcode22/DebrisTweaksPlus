@@ -86,7 +86,7 @@ namespace DebrisTweaks
             }
         }
 
-        public void LoadProfile(int slot)
+        public void LoadAllProfile(int slot)
         {
             if (slot < 1) slot = 1;
             var suffix = slot.ToString();

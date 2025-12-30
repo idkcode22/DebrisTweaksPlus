@@ -8,7 +8,7 @@
 		<color-setting apply-on-change='true' value='RightColour' id='RightColourID' text='Right Debris Colour'  hover-hint='Default Value: 0, 0, 255'/>
 		<slider-setting apply-on-change="true" value="DebrisScale" id="DebrisScaleID" text="Scale" show-buttons="true"  min="0.1" max="2" increment="0.05"  hover-hint='Default Value: 1'/>
 
-		<text text="_ " font-size="4"/>
+		<text text=" " font-size="4"/>
 		<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
 			<slider-setting apply-on-change="true" value="minLifetime" id="minLifetimeID" text="Min Lifespan Time" show-buttons="true" min="0" max="15" increment="0.1" hover-hint='Min Debris Lifetime'/>
 			<button text='Reset' font-size="4" align="Center" on-click="resetMinLifeTime"/>
