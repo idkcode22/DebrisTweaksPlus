@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Linq;
 using System.Reflection;
 using BeatSaberMarkupLanguage;
@@ -15,9 +15,9 @@ namespace DebrisTweaks.UI
 {
     internal class DTFlow : FlowCoordinator
     {
-        DTMainView mainView = null;
-        DTSideView sideView = null;
-        DTLeftSideView leftSideView = null;
+        public DTMainView mainView = null;
+        public DTSideView sideView = null;
+        public DTLeftSideView leftSideView = null;
 
         public static bool refreshOnline;
         protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
@@ -39,8 +39,6 @@ namespace DebrisTweaks.UI
             BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, null, ViewController.AnimationDirection.Horizontal);
         }
 
-
-
         private void ShowFlow()
         {
 
@@ -48,15 +46,19 @@ namespace DebrisTweaks.UI
             BeatSaberUI.PresentFlowCoordinator(_parentFlow, this);
             if (GameplaySetupPanel.refreshMain)
             {
-                BsmlWrapper.RefreshUI(mainView, "DebrisTweaks.UI.MainView.bsml");
-                BsmlWrapper.RefreshUI(sideView, "DebrisTweaks.UI.SideView.bsml");
-                BsmlWrapper.RefreshUI(leftSideView, "DebrisTweaks.UI.LeftSideView.bsml");
+                RefreshAllUI();
                 GameplaySetupPanel.refreshMain = false;
             }
 
         }
+        public static void RefreshAllUI()
+        {
+            if (flow == null) return;
 
-
+            BsmlWrapper.RefreshUI(flow.mainView, "DebrisTweaks.UI.MainView.bsml");
+            BsmlWrapper.RefreshUI(flow.sideView, "DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(flow.leftSideView, "DebrisTweaks.UI.LeftSideView.bsml");
+        }
         static DTFlow flow = null;
         static MenuButton menuButton;
 
@@ -160,6 +162,15 @@ namespace DebrisTweaks.UI
 
             BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.MainView.bsml");
         }
+
+        [UIAction("loadallclicked")]
+        private void LoadAllProfile()
+        {
+            int idx = (int)profile_value;
+            config.LoadAllProfile(idx);
+            DTFlow.RefreshAllUI();
+        }
+
 
         [UIAction("saveclicked")]
         private void SaveProfile()
@@ -269,7 +280,7 @@ namespace DebrisTweaks.UI
         private void resetMinLifeTime()
         {
             minLifetime = 0.2f;
-            BsmlWrapper.RefreshUI(this,"DebrisTweaks.UI.SideView.bsml");
+            BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.SideView.bsml");
 
         }
         [UIAction("resetMaxLifeTime")]
@@ -425,7 +436,6 @@ namespace DebrisTweaks.UI
     {
         public static void EnableUI() => DTFlow.Initialise();
         public static void DisableUI() => DTFlow.Deinit();
-
         public static void RefreshUI(BSMLAutomaticViewController instance, string bsmlLocation)
         {
             foreach (var child in instance.gameObject.transform.Cast<Transform>().ToList())

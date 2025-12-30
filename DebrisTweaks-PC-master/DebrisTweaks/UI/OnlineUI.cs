@@ -85,7 +85,7 @@ namespace DebrisTweaks.OnlineUI
         {
             refreshMain = true;
             int idx = (int)profile_value;
-            config.LoadProfile(idx);
+            config.LoadAllProfile(idx);
         }
 
         [UIAction("RefreshMain")]
