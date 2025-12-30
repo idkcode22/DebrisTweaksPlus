@@ -20,7 +20,7 @@
 			<slider-setting apply-on-change='true' value='rotation' id='rotationID' text='Rotation Speed' show-buttons='true' min='-10' max='10' increment='0.1' hover-hint='How much the debris rotates'/>
 			<button text='Reset' font-size="4" align="Center" on-click="resetRotation"/>
 		</horizontal>
-		<toggle-setting apply-on-change="true" value="dynamicDebrisToggle" id="dynamicDebrisToggleID" text="Dynamic Debris" hover-hint='This makes it where when you slice harder the more the debris will separate this will also effect rotation and random rotation if toggled.'/>
+		<toggle-setting apply-on-change="true" value="dynamicDebrisToggle" id="dynamicDebrisToggleID" text="Dynamic Debris" hover-hint='This makes it where when you slice faster the more the debris will separate this will also effect rotation and random rotation if toggled.'/>
 		<slider-setting apply-on-change="true" value="saberSens" id="saberSensID" text="Dynamic Debris Sensitivity" show-buttons="true" min="0" max="100" increment="1" hover-hint='Higher value less sensitivity recommended value: 40'/>
 		<slider-setting apply-on-change="true" value="randomCutFromCenter" id="randomCutFromCenterID" text="Random Cut From Center Speed" show-buttons="true" min="0" max="10" increment="0.1" hover-hint='When you slice the note the debris randomly splits from center Default Value: 0.1'/>
 		<toggle-setting apply-on-change="true" value="randomRotationToggle" id="randomRotationToggleID" text="Random Rotation Toggle" hover-hint='Default Value: False'/>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
@@ -182,11 +183,11 @@ namespace DebrisTweaks.UI
         internal void TestDebris()
         {
             var objs = Resources.FindObjectsOfTypeAll(typeof(SimpleLevelStarter));
-
             foreach (var lstartObj in objs)
             {
                 var lstart = (SimpleLevelStarter)lstartObj;
-                if (lstart.gameObject.name == "PerformanceTestLevelButton")
+                //Plugin.Log.Info("Objects Found in SimpleLevelStarter:" + lstart.gameObject.name); //find the level button names near player statics ui.
+                if (lstart.gameObject.name == (Environment.GetCommandLineArgs().Any(x => x.ToLowerInvariant() == "fpfc") && Resources.FindObjectsOfTypeAll<FirstPersonFlyingController>().Any(x => x.isActiveAndEnabled) ? "PerformanceTestLevelButton" : "MetronomeLevelButton")) //if fpfc is enabled we use the performance test level button and if were in vr we use the metronome level button.
                 {
                     // Reflect private method
                     var startLevelMethod = AccessTools.Method(typeof(SimpleLevelStarter), "StartLevel");
@@ -210,7 +211,7 @@ namespace DebrisTweaks.UI
                     if (_instance == null)
                     {
                         var go = new GameObject("GlobalCoroutineRunner");
-                        Object.DontDestroyOnLoad(go);
+                        UnityEngine.Object.DontDestroyOnLoad(go);
                         _instance = go.AddComponent<GlobalCoroutineRunner>();
                     }
                     return _instance;
