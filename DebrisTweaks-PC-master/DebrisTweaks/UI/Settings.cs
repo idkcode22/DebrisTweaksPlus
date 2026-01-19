@@ -148,11 +148,41 @@ namespace DebrisTweaks.UI
             set => config.RotationToggle = value;
         }
 
+        [UIValue("offsetX")]
+        private float offsetX
+        {
+            get => config.debrisOffsetX;
+            set => config.debrisOffsetX = value;
+        }
+        [UIValue("offsetY")]
+        private float offsetY
+        {
+            get => config.debrisOffsetY;
+            set => config.debrisOffsetY = value;
+        }
+        [UIValue("offsetZ")]
+        private float offsetZ
+        {
+            get => config.debrisOffsetZ;
+            set => config.debrisOffsetZ = value;
+        }
+
         [UIValue("profile_value")]
         public float profile_value
         {
             get => config.profile_value;
             set => config.profile_value = value;
+        }
+
+        [UIAction("multiplier-formatter")]
+        protected string MultiplierFormatter(float value)
+        {
+            return $"{value:N}x";
+        }
+        [UIAction("length-formatter")]
+        protected string LengthFormatter(float value)
+        {
+            return $"{value:N} m";
         }
         //profile stuff
         [UIAction("loadclicked")]
@@ -233,6 +263,33 @@ namespace DebrisTweaks.UI
             set => config.CustomColourToggle = value;
         }
 
+        [UIValue("disableDissolveAnim")]
+        private bool disableDissolveAnim
+        {
+            get => config.disableDissolveAnim;
+            set => config.disableDissolveAnim = value;
+        }
+        [UIValue("downscaleDespawnAnim")]
+        private bool downscaleDespawnAnim
+        {
+            get => config.downscaleDespawnAnim;
+            set => config.downscaleDespawnAnim = value;
+        }
+
+        [UIValue("overrideDissolveNoiseScale")]
+        private bool overrideDissolveNoiseScale
+        {
+            get => config.overrideDissolveNoiseScale;
+            set => config.overrideDissolveNoiseScale = value;
+        }
+
+        [UIValue("dissolveNoise")]
+        private float dissolveNoise
+        {
+            get => config.dissolveNoise;
+            set => config.dissolveNoise = value;
+        }
+
         [UIValue("LeftColour")]
         private Color LeftColour
         {
@@ -275,7 +332,14 @@ namespace DebrisTweaks.UI
             set => config.DebrisScale = value;
         }
 
+        [UIAction("multiplier-formatter")]
+        protected string MultiplierFormatter(float value)
+        {
+            return $"{value:N}x";
+        }
 
+        [UIAction("time-formatter")]
+        protected string TimeFormatter(float value) => $"{(float)value} seconds";
 
         [UIAction("resetMinLifeTime")]
         private void resetMinLifeTime()
@@ -389,7 +453,6 @@ namespace DebrisTweaks.UI
         }
 
 
-
         //reset value garabage
         [UIAction("ResetMoveSpeedMultiplier")]
         private void ResetMoveSpeedMultiplier()
@@ -430,6 +493,13 @@ namespace DebrisTweaks.UI
             config.LoadProfileLeft(idx);
             BsmlWrapper.RefreshUI(this, "DebrisTweaks.UI.LeftSideView.bsml");
         }
+
+        [UIAction("percent-formatter")]
+        protected string PercentFormatter(float value)
+        {
+            return value.ToString("P2");
+        }
+
 
     }
 
