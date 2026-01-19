@@ -1,8 +1,11 @@
-using HarmonyLib;
-using UnityEngine;
 using System.Reflection;
 using DebrisTweaks;
+using HarmonyLib;
+using IPA.Config.Data;
+using IPA.Utilities;
 using JetBrains.Annotations;
+using ModestTree;
+using UnityEngine;
 [HarmonyPatch(typeof(NoteDebrisSpawner))]
 public static class NoteDebrisSpawnerPatch
 {
@@ -10,7 +13,6 @@ public static class NoteDebrisSpawnerPatch
     private static readonly FieldInfo CutDirMultiplierField = AccessTools.Field(typeof(NoteDebrisSpawner), "_cutDirMultiplier");
     private static readonly FieldInfo FromCenterSpeedField = AccessTools.Field(typeof(NoteDebrisSpawner), "_fromCenterSpeed");
     private static readonly FieldInfo MoveSpeedMultiplierField = AccessTools.Field(typeof(NoteDebrisSpawner), "_moveSpeedMultiplier");
-
     private static readonly MethodInfo SpawnNoteDebrisMethod = AccessTools.Method(typeof(NoteDebrisSpawner), "SpawnNoteDebris");
 
     [HarmonyPrefix]
@@ -95,7 +97,7 @@ public static class NoteDebrisSpawnerPatch
             randomRotation = 0f;
         }
         //determind what the minium saberspeed is
-        float dynamicSaberSpeed = saberSpeed / config.saberSens;
+        float dynamicSaberSpeed = saberSpeed * config.saberSens/10;
         if (dynamicSaberSpeed < magnitude * 0.03f)
         {
             dynamicSaberSpeed = magnitude * 0.03f;
@@ -123,8 +125,25 @@ public static class NoteDebrisSpawnerPatch
         Vector3 position = __instance.transform.position;
         Vector3 cutoutOffset = Random.insideUnitSphere;
         Vector3 cutoutOffset2 = Random.insideUnitSphere;
-        debris.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, rotations, cutPoint, -cutNormal, force, -torque, lifeTime, cutoutOffset, false);
-        debris2.Init(colorType, notePos, noteRotation, moveVec, noteScale, position, rotations, cutPoint, cutNormal, force2, torque, lifeTime, cutoutOffset2, false);
+
+        // compute spawn-relative, world-aligned offset for X (lateral), Y (vertical) and Z (backwards)
+        float eps = 1e-6f;
+        Vector3 forward = magnitude > eps ? (moveVec / magnitude) : (rotations * Vector3.forward);
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
+        if (right.sqrMagnitude < eps)
+        {
+            // fallback if forward is parallel to world up
+            right = rotations * Vector3.right;
+        }
+        else
+        {
+            right.Normalize();
+        }
+        Vector3 up = Vector3.up;
+        Vector3 offsetPositioning = right * config.debrisOffsetX*-1 + up * config.debrisOffsetY + forward * (-config.debrisOffsetZ);
+
+        debris.Init(colorType, notePos, noteRotation, moveVec, noteScale, position + offsetPositioning, rotations, cutPoint, -cutNormal, force, -torque, lifeTime, cutoutOffset, false);
+        debris2.Init(colorType, notePos, noteRotation, moveVec, noteScale, position + offsetPositioning, rotations, cutPoint, cutNormal, force2, torque, lifeTime, cutoutOffset2, false);
 
         return false; // Skip the original method
     }
@@ -136,7 +155,7 @@ public static class NoteDebrisSpawnerPatch
         public static void Postfix(NoteDebris __instance, ColorType colorType, float ____lifeTime, MaterialPropertyBlockController ____materialPropertyBlockController, int ____colorID)
         {
             Config config = Config.Instance;
-            if (!config.ModToggle || (!config.RotationToggle && config.Drag == 0 && !config.RandomDrag && config.GravityToggle && !config.CustomColourToggle)) return;
+            if (!config.ModToggle) return;
 
             Rigidbody rb = __instance.GetComponent<Rigidbody>();
             if (rb != null)
@@ -164,6 +183,111 @@ public static class NoteDebrisSpawnerPatch
                 {
                     // Defensive: don't let any material errors break debris (multiplayer remote objects differ).
                 }
+            }
+
+            // Disable dissolve animation by setting cutout curve to flat 0
+            if (config.disableDissolveAnim)
+            {
+                try
+                {
+                    var cutoutCurveField = AccessTools.Field(typeof(NoteDebris), "_cutoutCurve");
+                    var cutoutCurveTextureOffsetIDField = AccessTools.Field(typeof(NoteDebris), "_cutoutTexOffsetID");
+                    if (cutoutCurveField != null)
+                    {
+                        // Curve that always evaluates to 0 across [0,1]
+                        AnimationCurve flatZeroCurve = AnimationCurve.Linear(0f, 0f, 1f, 0f);
+                        cutoutCurveField.SetValue(__instance, flatZeroCurve);
+                    }
+                }
+                catch
+                {
+                    // Defensive: don't let reflection errors break debris.
+                }
+            }
+
+            // Override dissolve noise scale
+            if (config.overrideDissolveNoiseScale && !config.disableDissolveAnim)
+            {
+                try
+                {
+                    ____materialPropertyBlockController.materialPropertyBlock.SetFloat("_CutoutTexScale", config.dissolveNoise);
+                }
+                catch
+                {
+                    //better safe than sorry
+                }
+            }
+
+
+            // Downscale over lifetime component
+            if (config.downscaleDespawnAnim)
+            {
+
+                try
+                {
+                    var existing = __instance.GetComponent<DebrisScaleOverLifetime>();
+                    if (existing != null)
+                    {
+                        existing.Initialize(____lifeTime, __instance.transform.localScale);
+                    }
+                    else
+                    {
+                        var scaler = __instance.gameObject.AddComponent<DebrisScaleOverLifetime>();
+                        scaler.Initialize(____lifeTime, __instance.transform.localScale);
+                    }
+
+                }
+                catch
+                {
+                    // Defensive: ignore component errors.
+                }
+            }
+        }
+    }
+
+    // Helper component that scales the debris from its initial scale to zero over the configured final seconds.
+    // It holds the original size until half of the lifespan is passed after spawn, then scales to zero over the remaining lifetime.
+    // Attached in Init postfix so it doesn't require patching NoteDebris.Update.
+    internal class DebrisScaleOverLifetime : MonoBehaviour
+    {
+        private float _lifeTime = 1f;
+        private float _elapsed = 0f;
+        private Vector3 _initialScale = Vector3.one;
+        private float _scaleStartTime = 0f;
+
+        public void Initialize(float lifeTime, Vector3 initialScale)
+        {
+            _lifeTime = lifeTime;
+            _initialScale = initialScale;
+
+            // if holdSeconds >= lifeTime, scaling will happen over whole lifetime (start at t=0)
+            _scaleStartTime = Mathf.Max(0f, _lifeTime - lifeTime / 2); //debris stays orginal size for half its lifetime.
+            _elapsed = 0f;
+
+            // Ensure starting scale
+            transform.localScale = _initialScale;
+        }
+
+        void Update()
+        {
+            if (_lifeTime <= 0f) return;
+            _elapsed += Time.deltaTime;
+
+            if (_elapsed < _scaleStartTime)
+            {
+                // Hold original scale until scale start time
+                transform.localScale = _initialScale;
+                return;
+            }
+
+            float scaleDuration = Mathf.Max(0.0001f, _lifeTime - _scaleStartTime);
+            float t = Mathf.Clamp01((_elapsed - _scaleStartTime) / scaleDuration);
+            transform.localScale = Vector3.Lerp(_initialScale, Vector3.zero, t);
+
+            // self-clean when finished so pooled objects don't keep stale components
+            if (t >= 1f)
+            {
+                Destroy(this);
             }
         }
     }
