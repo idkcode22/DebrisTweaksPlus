@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using DebrisTweaks;
 using HarmonyLib;
@@ -9,10 +10,6 @@ using UnityEngine;
 [HarmonyPatch(typeof(NoteDebrisSpawner))]
 public static class NoteDebrisSpawnerPatch
 {
-    private static readonly FieldInfo RotationField = AccessTools.Field(typeof(NoteDebrisSpawner), "_rotation");
-    private static readonly FieldInfo CutDirMultiplierField = AccessTools.Field(typeof(NoteDebrisSpawner), "_cutDirMultiplier");
-    private static readonly FieldInfo FromCenterSpeedField = AccessTools.Field(typeof(NoteDebrisSpawner), "_fromCenterSpeed");
-    private static readonly FieldInfo MoveSpeedMultiplierField = AccessTools.Field(typeof(NoteDebrisSpawner), "_moveSpeedMultiplier");
     private static readonly MethodInfo SpawnNoteDebrisMethod = AccessTools.Method(typeof(NoteDebrisSpawner), "SpawnNoteDebris");
 
     [HarmonyPrefix]
@@ -70,10 +67,8 @@ public static class NoteDebrisSpawnerPatch
         Vector3 vector = Vector3.ProjectOnPlane(saberDir, moveVec / magnitude);
         Vector3 vector2 = vector * (saberSpeed * cutDirMultiplier) + (moveVec * moveSpeedMultiplier);
 
-        if (config.DebrisScale != 1f)
-        {
-            noteScale = Vector3.one * config.DebrisScale;
-        }
+
+        noteScale *= config.DebrisScale;
         // Adjust vertical force based on cut height
         if (config.adjustVerticalForceToggle)
         {
@@ -86,38 +81,20 @@ public static class NoteDebrisSpawnerPatch
                 vector2.y = Mathf.Max(vector2.y, 0f);
             }
         }
-
-
-        if (config.randomRotationToggle)
-        {
-            randomRotation = config.randomRotation;
-        }
-        else
-        {
-            randomRotation = 0f;
-        }
+        // if random rotation then use config value if not then use 0f
+        randomRotation = config.randomRotationToggle ? config.randomRotation : 0f;
         //determind what the minium saberspeed is
-        float dynamicSaberSpeed = saberSpeed * config.saberSens/10;
-        if (dynamicSaberSpeed < magnitude * 0.03f)
+        float dynamicSaberSpeed = config.dynamicDebrisToggle ? saberSpeed * config.saberSens/10 : 1f;
+        if (config.dynamicDebrisToggle && (dynamicSaberSpeed < magnitude * 0.03f))
         {
             dynamicSaberSpeed = magnitude * 0.03f;
         }
         //calulate forces and rotation
         Quaternion debrisRotation = __instance.transform.rotation;
-        if (config.dynamicDebrisToggle)
-        {
-            // Transform rotation
-            force = debrisRotation * (-(cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * (dynamicSaberSpeed * fromCenterSpeed) + vector2);
-            force2 = debrisRotation * ((cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * (dynamicSaberSpeed * fromCenterSpeed) + vector2);
-            torque = debrisRotation * (Random.insideUnitSphere * randomRotation * (dynamicSaberSpeed)) + Vector3.Cross(cutNormal, vector) * (rotation * (dynamicSaberSpeed));
-        }
-        else
-        {
-            // Transform rotation
-            force = debrisRotation * (-(cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * fromCenterSpeed + vector2);
-            force2 = debrisRotation * ((cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * fromCenterSpeed + vector2);
-            torque = debrisRotation * (Random.insideUnitSphere * randomRotation) + (Vector3.Cross(cutNormal, vector) * rotation);
-        }
+        // Transform rotation
+        force = debrisRotation * (-(cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * (dynamicSaberSpeed * fromCenterSpeed) + vector2);
+        force2 = debrisRotation * ((cutNormal + Random.onUnitSphere * config.randomCutFromCenter) * (dynamicSaberSpeed * fromCenterSpeed) + vector2);
+        torque = debrisRotation * (Random.insideUnitSphere * randomRotation * (dynamicSaberSpeed)) + Vector3.Cross(cutNormal, vector) * (rotation * (dynamicSaberSpeed));
         // Set debris position and rotation
         Quaternion rotations = __instance.transform.rotation;
         force *= config.forceMultiplier;
@@ -144,7 +121,6 @@ public static class NoteDebrisSpawnerPatch
 
         debris.Init(colorType, notePos, noteRotation, moveVec, noteScale, position + offsetPositioning, rotations, cutPoint, -cutNormal, force, -torque, lifeTime, cutoutOffset, false);
         debris2.Init(colorType, notePos, noteRotation, moveVec, noteScale, position + offsetPositioning, rotations, cutPoint, cutNormal, force2, torque, lifeTime, cutoutOffset2, false);
-
         return false; // Skip the original method
     }
 
