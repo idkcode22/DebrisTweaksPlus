@@ -325,6 +325,13 @@ namespace DebrisTweaks.UI
             set => config.lifeTimeOffset = value;
         }
 
+        [UIValue("lifeTimeMultiplier")]
+        private float lifeTimeMultiplier
+        {
+            get => config.lifeTimeMultiplier;
+            set => config.lifeTimeMultiplier = value;
+        }
+
         [UIValue("DebrisScale")]
         public float DebrisScale
         {

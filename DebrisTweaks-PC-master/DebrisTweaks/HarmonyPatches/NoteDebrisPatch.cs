@@ -63,7 +63,7 @@ public static class NoteDebrisSpawnerPatch
 
         // Calculate parameters
         float magnitude = moveVec.magnitude;
-        float lifeTime = Mathf.Clamp(timeToNextColorNote + kLifeTimeOffset, kMinLifeTime, kMaxLifeTime);
+        float lifeTime = Mathf.Clamp(timeToNextColorNote + kLifeTimeOffset, kMinLifeTime, kMaxLifeTime) * config.lifeTimeMultiplier;
         Vector3 vector = Vector3.ProjectOnPlane(saberDir, moveVec / magnitude);
         Vector3 vector2 = vector * (saberSpeed * cutDirMultiplier) + (moveVec * moveSpeedMultiplier);
 
