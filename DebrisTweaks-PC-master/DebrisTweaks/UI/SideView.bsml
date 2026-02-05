@@ -19,6 +19,9 @@
 				<slider-setting apply-on-change="true" value="lifeTimeOffset" id="lifeTimeOffsetID" text="Lifespan Offset Time" formatter="time-formatter" show-buttons="true" min="-1" max="15" increment="0.05" hover-hint='Note: Lifespan is based on the time until the next note. The offset in which the debris lasts for until next note.'/>
 				<button text='Reset' font-size="4" align="Center" on-click="resetLifeTimeOffset"/>
 			</horizontal>
+			<horizontal pref-height='8' pref-width='100' anchor-pos-y='35' horizontal-fit='PreferredSize'>
+				<slider-setting apply-on-change="true" value="lifeTimeMultiplier" id="lifeTimeMultiplierID" text="Lifespan Multiplier" formatter="multiplier-formatter" show-buttons="true" min="0.05" max="4" increment="0.05" hover-hint='A multiplier for lifespan it will affect max, min, and offset configuration'/>
+			</horizontal>
 		</settings-container>
 	</tab>
 	<tab tags="tabs" tab-name="Dissolve" size-delta-y="-16" anchored-position-y="-8">
