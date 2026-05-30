@@ -65,7 +65,7 @@ namespace DebrisTweaks.UI
 
         public static void Initialise()
         {
-            MenuButtons.Instance.RegisterButton(menuButton ??= new MenuButton("Debris Tweaks+", "Add more tweaks to the debris!", () =>
+            MenuButtons.Instance.RegisterButton(menuButton ??= new MenuButton("Debris Tweaks+", "Modify the behaviour of debris.", () =>
             {
                 if (flow == null)
                     flow = BeatSaberUI.CreateFlowCoordinator<DTFlow>();
