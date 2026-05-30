@@ -1,6 +1,6 @@
 # DebrisTweaksPlus
 I used the following GitHub repository to make this mod, which is where most of the code came from: https://github.com/NuggoDEV/DebrisTweaks-PC#features
-# Features
+## Features
 1. Lifespan:
    - Min
    - Max
